@@ -17,6 +17,8 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   padding: 1rem;
+  background-color: var(--store-color-background);
+  color: var(--store-color-text);
 }
 
 nav {
@@ -27,10 +29,18 @@ nav {
   max-width: 1024px;
   margin: 0 auto;
   padding: 1rem;
+  background-color: var(--store-color-surface);
+  border-bottom: 1px solid var(--store-color-border);
 }
 
 nav a {
   display: inline-block;
+  color: var(--store-color-accent);
+}
+
+nav button {
+  background-color: var(--store-color-accent);
+  color: var(--store-color-on-accent);
 }
 
 main {

@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "turbo-rails", ">= 2.0"
   spec.add_dependency "authenticate", ">= 0.1.0"
   spec.add_dependency "internationalization", ">= 0.1.0"
+  spec.add_dependency "luna_style", ">= 0.1.0"
 end

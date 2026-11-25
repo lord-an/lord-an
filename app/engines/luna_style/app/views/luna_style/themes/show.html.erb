@@ -1,0 +1,26 @@
+<h1>Storefront theme</h1>
+
+<p>Choose the theme used by the product storefront.</p>
+
+<% if @theme_setting.errors.any? %>
+  <div class="alert" role="alert">
+    <ul>
+      <% @theme_setting.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @theme_setting,
+              scope: :theme_setting,
+              url: theme_path,
+              method: :patch do |form| %>
+  <div>
+    <%= form.label :theme, "Active theme" %>
+    <%= form.select :theme,
+                    LunaStyle::ThemeSetting::THEMES.map { |theme| [ theme.titleize, theme ] } %>
+  </div>
+
+  <%= form.submit "Save theme" %>
+<% end %>

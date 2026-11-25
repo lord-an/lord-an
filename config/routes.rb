@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   mount Authenticate::Engine => "/authenticate"
   mount Portal::Engine => "/portal"
   mount Store::Engine => "/store"
+  mount LunaStyle::Engine => "/luna-style"
   mount Internationalization::Engine => "/internationalization"
   mount Commerce::Engine => "/commerce"
 

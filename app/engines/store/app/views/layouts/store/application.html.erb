@@ -7,10 +7,10 @@
 
   <%= yield :head %>
 
-  <%= stylesheet_link_tag "store/application", "actiontext", media: "all" %>
+  <%= stylesheet_link_tag "store/application", "luna_style/application", "actiontext", media: "all" %>
   <%= javascript_importmap_tags %>
 </head>
-<body>
+<body data-storefront-theme="<%= storefront_theme %>">
   <nav>
     <%= link_to t("store.navigation.home"), root_path %>
     <%= link_to t("internationalization.settings.title"), "/internationalization/settings" %>

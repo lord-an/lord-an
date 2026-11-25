@@ -1,0 +1,42 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+:root {
+  --store-color-background: #f8fafc;
+  --store-color-surface: #ffffff;
+  --store-color-text: #0f172a;
+  --store-color-border: #cbd5e1;
+  --store-color-accent: #1d4ed8;
+  --store-color-on-accent: #ffffff;
+}
+
+body[data-storefront-theme="forest"] {
+  --store-color-background: #f0fdf4;
+  --store-color-surface: #ffffff;
+  --store-color-text: #14231a;
+  --store-color-border: #a7c4ae;
+  --store-color-accent: #14532d;
+  --store-color-on-accent: #ffffff;
+}
+
+body[data-storefront-theme="sunrise"] {
+  --store-color-background: #fff7ed;
+  --store-color-surface: #ffffff;
+  --store-color-text: #431407;
+  --store-color-border: #fed7aa;
+  --store-color-accent: #9a3412;
+  --store-color-on-accent: #ffffff;
+}

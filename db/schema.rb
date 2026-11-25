@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_25_150003) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_25_150004) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -88,6 +88,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_25_150003) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_commerce_orders_on_user_id"
+  end
+
+  create_table "luna_style_theme_settings", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "theme", default: "classic", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_luna_style_theme_settings_on_key", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|
