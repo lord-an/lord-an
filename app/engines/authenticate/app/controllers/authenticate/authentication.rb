@@ -25,24 +25,31 @@ module Authenticate
       def resume_session
         return unless defined?(::Current) && defined?(::Session)
 
-        Current.session ||= find_session_by_cookie
-      end
-
-      def find_session_by_cookie
-        cookies.delete(:session_id)
-        Session.find_by(id: cookies.signed[::Current::SESSION_COOKIE]) if cookies.signed[::Current::SESSION_COOKIE]
+        Current.session ||= ::Current.session_from(cookies)
       end
 
       def request_authentication
-        session[:return_to_after_authenticating] = request.url
+        session[:return_to_after_authenticating] = request.fullpath
         redirect_to "/authenticate/session/new"
       end
 
       def after_authentication_url
-        session.delete(:return_to_after_authenticating) || "/settings#account"
+        requested_path = session.delete(:return_to_after_authenticating).to_s
+        return requested_path if safe_return_path?(requested_path)
+
+        "/settings#account"
+      end
+
+      def redirect_authenticated_user
+        redirect_to "/settings#account" if authenticated?
+      end
+
+      def safe_return_path?(path)
+        path.start_with?("/") && !path.start_with?("//") && !path.include?("\\")
       end
 
       def start_new_session_for(user)
+        reset_session
         user.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip).tap do |new_session|
           Current.session = new_session
           cookies.signed.permanent[::Current::SESSION_COOKIE] = {
@@ -55,6 +62,7 @@ module Authenticate
 
       def terminate_session
         Current.session.destroy if defined?(::Current) && Current.session
+        Current.session = nil
         cookies.delete(::Current::SESSION_COOKIE)
         cookies.delete(:session_id)
       end

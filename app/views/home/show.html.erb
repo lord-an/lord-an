@@ -8,7 +8,9 @@
       <p class="home-hero__description"><%= t("home.description") %></p>
       <div class="home-actions">
         <%= link_to t("home.browse_products"), "/store", class: "home-button home-button--primary" %>
-        <%= link_to t("home.create_account"), "/authenticate/registrations/new", class: "home-button home-button--secondary" %>
+        <% unless Current.user %>
+          <%= link_to t("home.create_account"), "/authenticate/registrations/new", class: "home-button home-button--secondary" %>
+        <% end %>
       </div>
     </div>
     <div class="home-hero__art" aria-hidden="true">

@@ -8,6 +8,19 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "authenticated users are redirected away from password recovery" do
+    sign_in_as @user
+
+    get "/authenticate/passwords/new"
+
+    assert_redirected_to "/settings#account"
+
+    post "/authenticate/passwords", params: { email_address: @user.email_address }
+
+    assert_redirected_to "/settings#account"
+    assert_enqueued_emails 0
+  end
+
   test "create" do
     post "/authenticate/passwords", params: { email_address: @user.email_address }
     assert_enqueued_email_with Authenticate::PasswordsMailer, :reset, args: [ @user ]

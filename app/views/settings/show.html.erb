@@ -43,6 +43,7 @@
       <p><%= t "settings.page.appearance_description" %></p>
       <% if @user&.admin? %>
         <%= link_to t("settings.page.manage_appearance"), "/luna-style/theme", class: "button-link" %>
+        <p class="settings-card__note"><%= t "settings.page.appearance_admin_access" %></p>
       <% else %>
         <p class="settings-card__note"><%= t "settings.page.appearance_admin_only" %></p>
       <% end %>

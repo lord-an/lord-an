@@ -18,6 +18,17 @@ class StoreMountTest < ActionDispatch::IntegrationTest
     assert_select "a[href='/authenticate/registrations/new']", "Create an account"
   end
 
+  test "signed-in customers are not prompted to create another account" do
+    sign_in_as users(:one)
+
+    get "/"
+
+    assert_response :success
+    assert_select "a[href='/authenticate/registrations/new']", false
+    assert_select "a[href='/authenticate/session/new']", false
+    assert_select "a[href='/authenticate/session']", false
+  end
+
   test "mounts signup and login through separate engines" do
     get "/authenticate/registrations/new"
     assert_response :success
@@ -27,6 +38,25 @@ class StoreMountTest < ActionDispatch::IntegrationTest
     get "/authenticate/session/new"
     assert_response :success
     assert_select "h1", "Log in"
+  end
+
+  test "authenticated users cannot open or submit registration" do
+    sign_in_as users(:one)
+    user_count = User.count
+
+    get "/authenticate/registrations/new"
+    assert_redirected_to "/settings#account"
+
+    post "/authenticate/registrations", params: {
+      user: {
+        email_address: "second-account@example.org",
+        password: "a private password",
+        password_confirmation: "a private password"
+      }
+    }
+
+    assert_redirected_to "/settings#account"
+    assert_equal user_count, User.count
   end
 
   test "signup rejects passwords shorter than twelve characters" do
@@ -95,6 +125,27 @@ class StoreMountTest < ActionDispatch::IntegrationTest
     get "/portal/settings"
 
     assert_redirected_to "/authenticate/session/new"
+  end
+
+  test "changing a password revokes other sessions but keeps the current session" do
+    user = users(:one)
+    sign_in_as user
+    current_session_id = Current.session.id
+    other_session = user.sessions.create!
+
+    patch "/portal/settings", params: {
+      user: {
+        email_address: user.email_address,
+        current_password: "password",
+        password: "a new private password",
+        password_confirmation: "a new private password"
+      }
+    }
+
+    assert_redirected_to "/settings#account"
+    assert Session.exists?(current_session_id)
+    assert_not Session.exists?(other_session.id)
+    assert user.reload.authenticate("a new private password")
   end
 
   test "product management is restricted to administrators" do

@@ -9,7 +9,9 @@
     <%= link_to t("settings.page.language"), "/settings#language" %>
     <%= link_to t("settings.page.appearance"), "/settings#appearance" %>
   <% when :account %>
-    <%= link_to t("authenticate.sign_up"), "/authenticate/registrations/new" %>
-    <%= link_to t("authenticate.log_in"), "/authenticate/session/new" %>
+    <%= link_to t("authenticate.sign_up"), "/authenticate/registrations/new",
+      aria: { current: request.path == "/authenticate/registrations/new" ? "page" : nil } %>
+    <%= link_to t("authenticate.log_in"), "/authenticate/session/new",
+      aria: { current: request.path == "/authenticate/session/new" ? "page" : nil } %>
   <% end %>
 </nav>

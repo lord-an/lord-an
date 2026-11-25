@@ -49,9 +49,7 @@ module Internationalization
       def load_locale_user
         return unless defined?(::Current) && defined?(::Session)
 
-        if ::Current.respond_to?(:session) && !::Current.session && cookies.signed[::Current::SESSION_COOKIE]
-          ::Current.session = ::Session.find_by(id: cookies.signed[::Current::SESSION_COOKIE])
-        end
+        ::Current.session ||= ::Current.session_from(cookies) if ::Current.respond_to?(:session)
 
         ::Current.user if ::Current.respond_to?(:user)
       end

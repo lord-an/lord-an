@@ -83,8 +83,16 @@ fr:
       appearance: Apparence
       preferences_eyebrow: Préférences
       appearance_description: Choisissez l’apparence de la boutique.
-      appearance_admin_only: Les options d’apparence sont réservées aux administrateurs de la boutique.
+      appearance_admin_only: Seuls les comptes désignés comme administrateurs de la boutique peuvent modifier son apparence. Le propriétaire du site attribue ce rôle.
+      appearance_admin_access: Ce compte dispose des droits d’administration de la boutique.
       manage_appearance: Gérer l’apparence de la boutique
+    theme:
+      title: Apparence de la boutique
+      description: Choisissez le thème utilisé dans la boutique et le reste de l’application.
+      active: Thème actif
+      save: Enregistrer le thème
+      updated: Le thème de la boutique a été mis à jour.
+      admin_required: Un compte administrateur de la boutique est requis pour modifier l’apparence.
   site:
     navigation:
       home: Accueil de Lord An

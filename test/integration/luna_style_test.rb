@@ -14,11 +14,11 @@ class LunaStyleTest < ActionDispatch::IntegrationTest
     sign_in_as users(:one)
 
     get "/luna-style/theme"
-    assert_redirected_to "/store"
+    assert_redirected_to "/settings#appearance"
 
     patch "/luna-style/theme",
           params: { theme_setting: { theme: "forest" } }
-    assert_redirected_to "/store"
+    assert_redirected_to "/settings#appearance"
     assert_equal "classic", LunaStyle::ThemeSetting.current.reload.theme
   end
 
@@ -81,7 +81,7 @@ class LunaStyleTest < ActionDispatch::IntegrationTest
 
     [
       "/",
-      "/authenticate/session/new",
+      "/authenticate/passwords/#{administrator.generate_token_for(:password_reset)}/edit",
       "/portal/settings/edit",
       "/store",
       "/commerce/cart",

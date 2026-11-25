@@ -10,7 +10,7 @@ module LunaStyle
       @theme_setting = ThemeSetting.current
 
       if @theme_setting.update(theme_setting_params)
-        redirect_to theme_path, notice: "Storefront theme updated."
+        redirect_to theme_path, notice: t("settings.theme.updated")
       else
         render :show, status: :unprocessable_entity
       end
@@ -20,7 +20,7 @@ module LunaStyle
       def require_admin
         return if Current.user&.admin?
 
-        redirect_to "/store", alert: "Administrator access is required."
+        redirect_to "/settings#appearance", alert: t("settings.theme.admin_required")
       end
 
       def theme_setting_params

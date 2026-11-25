@@ -52,6 +52,29 @@ class SettingsTest < ActionDispatch::IntegrationTest
     assert_select "nav.section-nav a[href='/store/wishlists']", "Wishlists"
   end
 
+  test "appearance management is available only to explicitly designated administrators" do
+    get "/settings"
+
+    assert_response :success
+    assert_select "a[href='/luna-style/theme']", false
+    assert_select "p.settings-card__note", /Only accounts designated as store administrators/
+
+    sign_in_as users(:one)
+    get "/settings"
+
+    assert_response :success
+    assert_select "a[href='/luna-style/theme']", false
+
+    administrator = User.find(users(:two).id)
+    administrator.update!(admin: true)
+    sign_in_as administrator
+    get "/settings"
+
+    assert_response :success
+    assert_select "a[href='/luna-style/theme']", "Manage storefront appearance"
+    assert_select "p.settings-card__note", "This account has store administrator access."
+  end
+
   test "account edits cannot change the language preference" do
     user = users(:one)
     original_locale = user.preferred_locale

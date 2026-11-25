@@ -1,6 +1,10 @@
-<h1>Storefront theme</h1>
+<header class="page-heading">
+  <p class="eyebrow"><%= t "settings.page.appearance" %></p>
+  <h1><%= t "settings.theme.title" %></h1>
+  <p><%= t "settings.theme.description" %></p>
+</header>
 
-<p>Choose the theme used by the product storefront.</p>
+<section class="content-card">
 
 <% if @theme_setting.errors.any? %>
   <div class="alert" role="alert">
@@ -17,10 +21,11 @@
               url: theme_path,
               method: :patch do |form| %>
   <div>
-    <%= form.label :theme, "Active theme" %>
+    <%= form.label :theme, t("settings.theme.active") %>
     <%= form.select :theme,
                     LunaStyle::ThemeSetting::THEMES.map { |theme| [ theme.titleize, theme ] } %>
   </div>
 
-  <%= form.submit "Save theme" %>
+  <%= form.submit t("settings.theme.save") %>
 <% end %>
+</section>

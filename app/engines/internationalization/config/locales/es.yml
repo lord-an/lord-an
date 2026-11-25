@@ -83,8 +83,16 @@ es:
       appearance: Apariencia
       preferences_eyebrow: Preferencias
       appearance_description: Elige el aspecto de la tienda.
-      appearance_admin_only: Las opciones de apariencia están disponibles para administradores de la tienda.
+      appearance_admin_only: Solo las cuentas designadas como administradoras de la tienda pueden cambiar su apariencia. El propietario del sitio asigna a las personas administradoras.
+      appearance_admin_access: Esta cuenta tiene acceso de administración de la tienda.
       manage_appearance: Administrar la apariencia de la tienda
+    theme:
+      title: Apariencia de la tienda
+      description: Elige el tema que se usará en la tienda y en el resto de la aplicación.
+      active: Tema activo
+      save: Guardar tema
+      updated: Se actualizó el tema de la tienda.
+      admin_required: Se necesita una cuenta administradora de la tienda para cambiar la apariencia.
   site:
     navigation:
       home: Inicio de Lord An

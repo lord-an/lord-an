@@ -30,19 +30,22 @@ bin/rails test:system
 
 The application supports English, French, and Spanish. Guests select a locale
 that is stored in a cookie; signed-in users can save a preferred locale in
-account settings.
+the unified Settings page.
 
 ## Store administration
 
 New accounts are customers by default. To grant catalog-management access to an
-existing account, use the Rails console as a trusted operator:
+existing account, use the Rails console as a trusted site owner:
 
 ```ruby
 User.find_by!(email_address: "operator@example.com").update!(admin: true)
 ```
 
 Only administrators can create, update, or delete products. Customers and guests
-can browse the catalog.
+can browse the catalog. The same `admin: true` flag grants access to storefront
+appearance controls. No administrator is provisioned automatically; a trusted
+site owner must explicitly promote the intended account. There is no in-app
+administrator-management screen.
 
 ## Engine boundaries
 

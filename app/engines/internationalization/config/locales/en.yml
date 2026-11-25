@@ -83,8 +83,16 @@ en:
       appearance: Appearance
       preferences_eyebrow: Preferences
       appearance_description: Set the look and feel of the storefront.
-      appearance_admin_only: Appearance controls are available to store administrators.
+      appearance_admin_only: Only accounts designated as store administrators can manage the storefront theme. Administrators are assigned by the site owner.
+      appearance_admin_access: This account has store administrator access.
       manage_appearance: Manage storefront appearance
+    theme:
+      title: Storefront appearance
+      description: Choose the theme used across the storefront and the rest of the application.
+      active: Active theme
+      save: Save theme
+      updated: Storefront theme updated.
+      admin_required: Store administrator access is required to manage appearance.
   site:
     navigation:
       home: Lord An home

@@ -11,11 +11,13 @@ module Portal
 
     def update
       settings = settings_params
+      changing_password = password_change?(settings)
 
-      if password_change?(settings) && !@user.authenticate(settings.delete(:current_password).to_s)
+      if changing_password && !@user.authenticate(settings.delete(:current_password).to_s)
         @user.errors.add(:current_password, t("portal.settings.current_password_incorrect"))
         render :edit, status: :unprocessable_entity
       elsif @user.update(settings.except(:current_password))
+        @user.sessions.where.not(id: Current.session.id).destroy_all if changing_password
         redirect_to "/settings#account", notice: t("portal.settings.updated")
       else
         render :edit, status: :unprocessable_entity

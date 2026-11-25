@@ -1,8 +1,9 @@
 # Portal engine
 
-Mountable account settings engine for signed-in users. It uses the
+Mountable account-management engine for signed-in users. It uses the
 `Authenticate` engine's shared session handling and the host application's
-`User` model.
+`User` model. Account details are edited from the unified settings experience;
+language preferences are managed there separately.
 
 Mount it at `/portal`:
 
@@ -10,8 +11,9 @@ Mount it at `/portal`:
 mount Portal::Engine => "/portal"
 ```
 
-The account settings page is available at `/portal/settings` and allows users
-to change their email address and password.
+The unified settings page is available at `/settings`. The legacy
+`/portal/settings` destination redirects to its account section. The Portal
+engine owns account detail editing at `/portal/settings/edit`.
 
 ## Usage
 How to use my plugin.
