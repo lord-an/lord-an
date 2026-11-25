@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= t "commerce.cart.title" %></title>
+    <title><%= content_for(:title) || t("commerce.cart.title") %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -10,16 +10,8 @@
     <%= javascript_importmap_tags %>
   </head>
   <body data-luna-style-theme="<%= luna_style_theme %>">
-    <nav>
-      <%= link_to t("store.navigation.home"), "/store" %>
-      <%= link_to t("commerce.cart.title"), cart_path %>
-      <%= link_to t("commerce.orders.title"), orders_path %>
-      <%= link_to t("portal.settings.title"), "/portal/settings" %>
-    </nav>
-    <p class="notice"><%= flash[:notice] %></p>
-    <p class="alert"><%= flash[:alert] %></p>
-    <main>
-      <%= yield %>
-    </main>
+    <%= render "shared/site_header", section: :commerce %>
+    <%= render "shared/flash_messages" %>
+    <main class="page-container"><%= yield %></main>
   </body>
 </html>

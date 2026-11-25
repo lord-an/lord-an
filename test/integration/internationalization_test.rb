@@ -3,7 +3,11 @@ require "test_helper"
 class InternationalizationTest < ActionDispatch::IntegrationTest
   test "guests can select a locale that is retained in a cookie across engines" do
     get "/internationalization/settings"
+    assert_redirected_to "/settings#language"
+
+    get "/settings"
     assert_response :success
+    assert_select "h1", "Settings"
     assert_select "select[name=locale] option", count: 3
     assert_select "form[action='/internationalization/locale']"
 
@@ -37,10 +41,10 @@ class InternationalizationTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h1", "Productos"
 
-    get "/portal/settings"
+    get "/settings"
     assert_response :success
-    assert_select "p", /Idioma/
-    assert_select "p", /Español/
+    assert_select "h2#language-title", "Idioma"
+    assert_select "select[name=locale] option[selected][value=es]"
   end
 
   test "the signed-in account preference overrides and refreshes a stale guest cookie" do
@@ -78,7 +82,7 @@ class InternationalizationTest < ActionDispatch::IntegrationTest
 
     user = User.find_by!(email_address: "french-user@example.org")
     assert_equal "fr", user.preferred_locale
-    assert_redirected_to "/portal/settings"
+    assert_redirected_to "/settings#account"
   end
 
   test "translation dictionaries configure locale-specific pluralization and dates" do

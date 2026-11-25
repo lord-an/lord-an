@@ -25,7 +25,7 @@ en:
       fr: French
       es: Spanish
     settings:
-      title: Language settings
+      title: Settings
       description: Choose the language used across the application.
       language: Language
       save: Save language
@@ -58,8 +58,8 @@ en:
     invalid_reset_link: Password reset link is invalid or has expired.
   portal:
     settings:
-      title: Account settings
-      edit_title: Edit account settings
+      title: Account
+      edit_title: Edit account
       email: Email
       language: Language
       edit: Edit settings
@@ -69,6 +69,30 @@ en:
       cancel: Cancel
       updated: Settings updated.
       current_password_incorrect: is incorrect
+  settings:
+    page:
+      eyebrow: Your space
+      title: Settings
+      description: Manage your account, language, and appearance preferences in one place.
+      navigation: Settings sections
+      account: Account
+      account_eyebrow: Your profile
+      account_guest: Sign in to manage your account details.
+      manage_account: Edit account details
+      language: Language
+      appearance: Appearance
+      preferences_eyebrow: Preferences
+      appearance_description: Set the look and feel of the storefront.
+      appearance_admin_only: Appearance controls are available to store administrators.
+      manage_appearance: Manage storefront appearance
+  site:
+    navigation:
+      home: Lord An home
+      primary: Main navigation
+      section: Section navigation
+      store: Store
+      cart: Cart
+      settings: Settings
   store:
     authorization:
       admin_required: Only store administrators can manage products.

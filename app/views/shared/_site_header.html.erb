@@ -1,0 +1,25 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <%= link_to "Lord An", "/", class: "site-brand", aria: { label: t("site.navigation.home") } %>
+    <nav class="site-nav" aria-label="<%= t 'site.navigation.primary' %>">
+      <%= link_to t("site.navigation.store"), "/store", aria: { current: request.path.start_with?("/store") ? "page" : nil } %>
+      <% if Current.user %>
+        <%= link_to t("site.navigation.cart"), "/commerce/cart", aria: { current: request.path.start_with?("/commerce") ? "page" : nil } %>
+      <% end %>
+      <%= link_to t("site.navigation.settings"), "/settings", aria: { current: request.path.start_with?("/settings", "/portal/settings", "/internationalization/settings", "/luna-style/theme") ? "page" : nil } %>
+    </nav>
+    <% unless local_assigns[:section].to_s == "account" %>
+      <div class="site-header__account">
+        <% if Current.user %>
+          <%= button_to t("authenticate.log_out"), "/authenticate/session", method: :delete, class: "button-link button-link--quiet" %>
+        <% else %>
+          <%= link_to t("authenticate.log_in"), "/authenticate/session/new", class: "button-link button-link--quiet" %>
+          <%= link_to t("authenticate.sign_up"), "/authenticate/registrations/new", class: "button-link" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <% if local_assigns[:section].present? && (section.to_sym != :store || Current.user) %>
+    <%= render "shared/section_navigation", section: section %>
+  <% end %>
+</header>

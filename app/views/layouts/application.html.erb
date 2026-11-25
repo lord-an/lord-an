@@ -25,9 +25,8 @@
   </head>
 
   <body data-luna-style-theme="<%= luna_style_theme %>">
-    <nav>
-      <%= link_to t("internationalization.settings.title"), "/internationalization/settings" %>
-    </nav>
+    <%= render "shared/site_header" %>
+    <%= render "shared/flash_messages" %>
     <%= yield %>
   </body>
 </html>

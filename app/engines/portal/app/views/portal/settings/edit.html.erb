@@ -11,11 +11,6 @@
   </div>
 
   <div>
-    <%= form.label :preferred_locale, t("internationalization.settings.language") %>
-    <%= form.select :preferred_locale, locale_options %>
-  </div>
-
-  <div>
     <%= form.label :current_password %>
     <%= form.password_field :current_password, autocomplete: "current-password" %>
   </div>
@@ -34,4 +29,4 @@
   <%= form.submit t("portal.settings.save") %>
 <% end %>
 
-<%= link_to t("portal.settings.cancel"), "/portal/settings" %>
+<%= link_to t("portal.settings.cancel"), "/settings#account" %>

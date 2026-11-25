@@ -52,13 +52,14 @@ class StoreMountTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to "/portal/settings"
+    assert_redirected_to "/settings#account"
     user = User.find_by!(email_address: "engine-user@example.org")
     assert_not user.admin?
 
-    get "/portal/settings"
+    get "/settings"
     assert_response :success
-    assert_select "p", /engine-user@example\.org/
+    assert_select "h2#account-title", "Account"
+    assert_select "p.settings-card__value", "engine-user@example.org"
 
     get "/portal/settings/edit"
     assert_response :success
@@ -73,7 +74,7 @@ class StoreMountTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to "/portal/settings"
+    assert_redirected_to "/settings#account"
     user = User.find_by!(email_address: "updated-user@example.org")
     assert user.authenticate("a new private password")
 

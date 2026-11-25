@@ -1,0 +1,51 @@
+<main class="page-container settings-page">
+  <header class="page-heading">
+    <p class="eyebrow"><%= t "settings.page.eyebrow" %></p>
+    <h1><%= t "settings.page.title" %></h1>
+    <p><%= t "settings.page.description" %></p>
+  </header>
+
+  <nav class="section-nav settings-nav" aria-label="<%= t 'settings.page.navigation' %>">
+    <%= link_to t("settings.page.account"), "#account" %>
+    <%= link_to t("settings.page.language"), "#language" %>
+    <%= link_to t("settings.page.appearance"), "#appearance" %>
+  </nav>
+
+  <div class="settings-grid">
+    <section class="content-card settings-card" id="account" aria-labelledby="account-title">
+      <p class="eyebrow"><%= t "settings.page.account_eyebrow" %></p>
+      <h2 id="account-title"><%= t "settings.page.account" %></h2>
+      <% if @user %>
+        <p class="settings-card__summary"><%= t "portal.settings.email" %></p>
+        <p class="settings-card__value"><%= @user.email_address %></p>
+        <%= link_to t("settings.page.manage_account"), "/portal/settings/edit", class: "button-link" %>
+      <% else %>
+        <p><%= t "settings.page.account_guest" %></p>
+        <%= link_to t("authenticate.log_in"), "/authenticate/session/new", class: "button-link" %>
+      <% end %>
+    </section>
+
+    <section class="content-card settings-card" id="language" aria-labelledby="language-title">
+      <p class="eyebrow"><%= t "settings.page.preferences_eyebrow" %></p>
+      <h2 id="language-title"><%= t "settings.page.language" %></h2>
+      <p><%= t "internationalization.settings.description" %></p>
+      <%= form_with url: "/internationalization/locale", method: :patch, class: "settings-form" do |form| %>
+        <%= form.hidden_field :return_to, value: "/settings#language" %>
+        <%= form.label :locale, t("internationalization.settings.language") %>
+        <%= form.select :locale, locale_options, selected: @preferred_locale %>
+        <%= form.submit t("internationalization.settings.save") %>
+      <% end %>
+    </section>
+
+    <section class="content-card settings-card" id="appearance" aria-labelledby="appearance-title">
+      <p class="eyebrow"><%= t "settings.page.preferences_eyebrow" %></p>
+      <h2 id="appearance-title"><%= t "settings.page.appearance" %></h2>
+      <p><%= t "settings.page.appearance_description" %></p>
+      <% if @user&.admin? %>
+        <%= link_to t("settings.page.manage_appearance"), "/luna-style/theme", class: "button-link" %>
+      <% else %>
+        <p class="settings-card__note"><%= t "settings.page.appearance_admin_only" %></p>
+      <% end %>
+    </section>
+  </div>
+</main>

@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Account settings</title>
+  <title><%= content_for(:title) || t("settings.page.title") %></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag "portal/application", "luna_style/application", media: "all" %>
 </head>
 <body data-luna-style-theme="<%= luna_style_theme %>">
-  <nav>
-    <%= link_to t("store.navigation.home"), "/store" %>
-    <%= link_to t("internationalization.settings.title"), "/internationalization/settings" %>
-    <%= button_to t("authenticate.log_out"), "/authenticate/session", method: :delete %>
-  </nav>
-
-  <div class="notice"><%= flash[:notice] %></div>
-  <div class="alert"><%= flash[:alert] %></div>
-
-  <main><%= yield %></main>
+  <%= render "shared/site_header", section: :settings %>
+  <%= render "shared/flash_messages" %>
+  <main class="page-container"><%= yield %></main>
 </body>
 </html>

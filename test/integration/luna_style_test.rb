@@ -82,10 +82,10 @@ class LunaStyleTest < ActionDispatch::IntegrationTest
     [
       "/",
       "/authenticate/session/new",
-      "/portal/settings",
+      "/portal/settings/edit",
       "/store",
       "/commerce/cart",
-      "/internationalization/settings",
+      "/settings",
       "/luna-style/theme"
     ].each do |path|
       get path

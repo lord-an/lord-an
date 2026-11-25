@@ -3,6 +3,7 @@ module Portal
     before_action :set_user
 
     def show
+      redirect_to "/settings#account"
     end
 
     def edit
@@ -15,7 +16,7 @@ module Portal
         @user.errors.add(:current_password, t("portal.settings.current_password_incorrect"))
         render :edit, status: :unprocessable_entity
       elsif @user.update(settings.except(:current_password))
-        redirect_to "/portal/settings", notice: t("portal.settings.updated")
+        redirect_to "/settings#account", notice: t("portal.settings.updated")
       else
         render :edit, status: :unprocessable_entity
       end
@@ -31,7 +32,7 @@ module Portal
       end
 
       def settings_params
-        params.expect(user: [ :email_address, :preferred_locale, :current_password, :password, :password_confirmation ])
+        params.expect(user: [ :email_address, :current_password, :password, :password_confirmation ])
       end
   end
 end

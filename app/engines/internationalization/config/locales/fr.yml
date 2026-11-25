@@ -25,7 +25,7 @@ fr:
       fr: Français
       es: Espagnol
     settings:
-      title: Préférences linguistiques
+      title: Paramètres
       description: Choisissez la langue utilisée dans toute l’application.
       language: Langue
       save: Enregistrer la langue
@@ -58,8 +58,8 @@ fr:
     invalid_reset_link: Le lien de réinitialisation est invalide ou a expiré.
   portal:
     settings:
-      title: Paramètres du compte
-      edit_title: Modifier les paramètres du compte
+      title: Compte
+      edit_title: Modifier le compte
       email: Adresse e-mail
       language: Langue
       edit: Modifier les paramètres
@@ -69,6 +69,30 @@ fr:
       cancel: Annuler
       updated: Paramètres mis à jour.
       current_password_incorrect: est incorrect
+  settings:
+    page:
+      eyebrow: Votre espace
+      title: Paramètres
+      description: Gérez votre compte, votre langue et vos préférences d’apparence au même endroit.
+      navigation: Sections des paramètres
+      account: Compte
+      account_eyebrow: Votre profil
+      account_guest: Connectez-vous pour gérer les informations de votre compte.
+      manage_account: Modifier les informations du compte
+      language: Langue
+      appearance: Apparence
+      preferences_eyebrow: Préférences
+      appearance_description: Choisissez l’apparence de la boutique.
+      appearance_admin_only: Les options d’apparence sont réservées aux administrateurs de la boutique.
+      manage_appearance: Gérer l’apparence de la boutique
+  site:
+    navigation:
+      home: Accueil de Lord An
+      primary: Navigation principale
+      section: Navigation de section
+      store: Boutique
+      cart: Panier
+      settings: Paramètres
   store:
     authorization:
       admin_required: Seuls les administrateurs de la boutique peuvent gérer les produits.

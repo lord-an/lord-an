@@ -1,0 +1,15 @@
+<nav class="section-nav" aria-label="<%= t 'site.navigation.section' %>">
+  <% case section.to_sym %>
+  <% when :store %>
+    <%= link_to t("store.navigation.wishlists"), "/store/wishlists" %>
+  <% when :commerce %>
+    <%= link_to t("commerce.orders.title"), "/commerce/orders" %>
+  <% when :settings %>
+    <%= link_to t("settings.page.account"), "/settings#account" %>
+    <%= link_to t("settings.page.language"), "/settings#language" %>
+    <%= link_to t("settings.page.appearance"), "/settings#appearance" %>
+  <% when :account %>
+    <%= link_to t("authenticate.sign_up"), "/authenticate/registrations/new" %>
+    <%= link_to t("authenticate.log_in"), "/authenticate/session/new" %>
+  <% end %>
+</nav>

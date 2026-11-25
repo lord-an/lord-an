@@ -5,7 +5,7 @@ module Authenticate
 
     private
       def after_signup_url
-        "/portal/settings"
+        "/settings#account"
       end
   end
 end

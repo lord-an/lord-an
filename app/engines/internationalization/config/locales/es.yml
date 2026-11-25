@@ -25,7 +25,7 @@ es:
       fr: Francés
       es: Español
     settings:
-      title: Preferencias de idioma
+      title: Configuración
       description: Elija el idioma utilizado en toda la aplicación.
       language: Idioma
       save: Guardar idioma
@@ -58,8 +58,8 @@ es:
     invalid_reset_link: El enlace para restablecer la contraseña no es válido o ha caducado.
   portal:
     settings:
-      title: Configuración de la cuenta
-      edit_title: Editar configuración de la cuenta
+      title: Cuenta
+      edit_title: Editar cuenta
       email: Correo electrónico
       language: Idioma
       edit: Editar configuración
@@ -69,6 +69,30 @@ es:
       cancel: Cancelar
       updated: Configuración actualizada.
       current_password_incorrect: es incorrecta
+  settings:
+    page:
+      eyebrow: Tu espacio
+      title: Configuración
+      description: Administra tu cuenta, idioma y preferencias de apariencia en un solo lugar.
+      navigation: Secciones de configuración
+      account: Cuenta
+      account_eyebrow: Tu perfil
+      account_guest: Inicia sesión para administrar los datos de tu cuenta.
+      manage_account: Editar datos de la cuenta
+      language: Idioma
+      appearance: Apariencia
+      preferences_eyebrow: Preferencias
+      appearance_description: Elige el aspecto de la tienda.
+      appearance_admin_only: Las opciones de apariencia están disponibles para administradores de la tienda.
+      manage_appearance: Administrar la apariencia de la tienda
+  site:
+    navigation:
+      home: Inicio de Lord An
+      primary: Navegación principal
+      section: Navegación de sección
+      store: Tienda
+      cart: Carrito
+      settings: Configuración
   store:
     authorization:
       admin_required: Solo los administradores de la tienda pueden gestionar productos.
