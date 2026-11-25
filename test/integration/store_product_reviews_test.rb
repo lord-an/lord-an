@@ -3,7 +3,7 @@ require "test_helper"
 class StoreProductReviewsTest < ActionDispatch::IntegrationTest
   test "a signed-in customer can submit a review and the product rating is cached" do
     sign_in_as users(:one)
-    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4)
+    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4, price_cents: 2200, currency_code: "USD")
 
     get "/store/products/#{product.id}/reviews/new"
     assert_response :success
@@ -25,7 +25,7 @@ class StoreProductReviewsTest < ActionDispatch::IntegrationTest
   end
 
   test "review creation requires authentication" do
-    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4)
+    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4, price_cents: 2200, currency_code: "USD")
 
     post "/store/products/#{product.id}/reviews", params: {
       review: { rating: 4, body: "Looks good." }
@@ -37,7 +37,7 @@ class StoreProductReviewsTest < ActionDispatch::IntegrationTest
 
   test "review validation rejects ratings outside one to five and missing bodies" do
     sign_in_as users(:one)
-    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4)
+    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4, price_cents: 2200, currency_code: "USD")
 
     post "/store/products/#{product.id}/reviews", params: {
       review: { rating: 6, body: "" }
@@ -49,7 +49,7 @@ class StoreProductReviewsTest < ActionDispatch::IntegrationTest
   end
 
   test "product pages display average ratings and filter reviews by rating" do
-    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4)
+    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4, price_cents: 2200, currency_code: "USD")
     product.reviews.create!(user: users(:one), rating: 5, body: "Excellent.")
     product.reviews.create!(user: users(:two), rating: 3, body: "It is fine.")
 
@@ -71,7 +71,7 @@ class StoreProductReviewsTest < ActionDispatch::IntegrationTest
   end
 
   test "updating and deleting reviews recomputes the product average and count" do
-    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4)
+    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4, price_cents: 2200, currency_code: "USD")
     review = product.reviews.create!(user: users(:one), rating: 5, body: "Excellent.")
     product.reviews.create!(user: users(:two), rating: 3, body: "It is fine.")
     assert_equal 4.0, product.reload.rating.to_f

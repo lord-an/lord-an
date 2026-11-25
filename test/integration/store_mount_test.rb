@@ -103,9 +103,11 @@ class StoreMountTest < ActionDispatch::IntegrationTest
     sign_in_as(administrator)
     get "/store/products/new"
     assert_response :success
+    assert_select "input[name='product[price_cents]'][required]"
+    assert_select "input[name='product[currency_code]'][required]"
 
     post "/store/products", params: {
-      product: { name: "Admin-created product", inventory_count: 3 }
+      product: { name: "Admin-created product", inventory_count: 3, price_cents: 1500, currency_code: "USD" }
     }
     assert_response :redirect
     assert_match %r{/store/products/\d+\z}, response.location

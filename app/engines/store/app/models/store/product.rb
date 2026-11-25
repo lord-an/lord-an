@@ -11,8 +11,14 @@ module Store
 
     validates :name, presence: true
     validates :inventory_count, numericality: { greater_than_or_equal_to: 0 }
+    validates :price_cents, numericality: { only_integer: true, greater_than: 0 }
+    validates :currency_code, presence: true, format: { with: /\A[A-Z]{3}\z/ }
 
     accepts_nested_attributes_for :translations, reject_if: :translation_blank?
+
+    def price_set?
+      price_cents.to_i.positive? && currency_code.to_s.match?(/\A[A-Z]{3}\z/)
+    end
 
     def localized_name(locale = I18n.locale)
       translation_for(locale)&.name.presence || name

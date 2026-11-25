@@ -19,8 +19,8 @@ bin/rails server
 ```
 
 The storefront is available at `/` and `/store`. Sign-up and login are under
-`/authenticate`; account settings are under `/portal`. Run the application test
-suite with:
+`/authenticate`; account settings are under `/portal`; customer carts and unpaid
+order records are under `/commerce`. Run the application test suite with:
 
 ```sh
 bin/rails test
@@ -49,13 +49,16 @@ can browse the catalog.
   application's account and session models.
 - `Portal` owns signed-in account settings.
 - `Store` owns catalog, inventory, product reviews, wishlists, and stock alerts.
+- `Commerce` owns customer carts and order snapshots, depending on Store through
+  its product model.
 - `Internationalization` owns locale selection and dictionaries shared by the
   host and mounted engines.
 
-Keep future purchasing separate from the catalog: add a checkout/orders engine
-that depends on `Store` for product references and on the host authentication
-contract for the current customer. Keep payment-provider integration behind an
-adapter boundary so the commerce domain does not depend on a vendor SDK.
+The Commerce engine currently creates `pending_payment` orders only. It does
+not charge customers, reserve inventory, or calculate tax or shipping. Do not
+enable it as a live checkout until a payment provider, currency/region rules,
+and stock-reservation policy have been selected and implemented behind a
+provider adapter.
 
 ## Production readiness
 
@@ -68,10 +71,10 @@ revisited before horizontal scaling or availability guarantees.
 
 ## Near-term roadmap
 
-1. Establish an operator/admin provisioning and recovery process.
-2. Implement pricing, carts, orders, stock reservation, and checkout in a
-   separate engine; choose payment and fulfillment providers before building
-   their adapters.
+1. Establish a secure operator/admin provisioning and recovery process.
+2. Select currency/region rules, payment and fulfillment providers, then
+   complete provider callbacks, stock reservation, tax, shipping, and order
+   cancellation in the Commerce engine.
 3. Configure and verify production email, background-job retries, and
    unsubscribe handling.
 4. Validate deployment, HTTPS, database/upload backups, and restoration.

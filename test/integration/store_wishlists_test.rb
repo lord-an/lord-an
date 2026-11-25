@@ -3,7 +3,7 @@ require "test_helper"
 class StoreWishlistsTest < ActionDispatch::IntegrationTest
   test "an owner can create, add, move, and remove wishlist products" do
     sign_in_as users(:one)
-    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4)
+    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4, price_cents: 2200, currency_code: "USD")
 
     post "/store/wishlists", params: { wishlist: { name: "Home Ideas" } }
     wishlist = users(:one).wishlists.find_by!(name: "Home Ideas")
@@ -52,7 +52,7 @@ class StoreWishlistsTest < ActionDispatch::IntegrationTest
 
   test "the product wishlist form is available to signed-in customers" do
     sign_in_as users(:one)
-    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4)
+    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4, price_cents: 2200, currency_code: "USD")
 
     get "/store/products/#{product.id}"
 
@@ -61,7 +61,7 @@ class StoreWishlistsTest < ActionDispatch::IntegrationTest
   end
 
   test "the product wishlist form directs visitors to sign up" do
-    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4)
+    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4, price_cents: 2200, currency_code: "USD")
 
     get "/store/products/#{product.id}"
 
@@ -71,7 +71,7 @@ class StoreWishlistsTest < ActionDispatch::IntegrationTest
 
   test "wishlists can be filtered by owner and product" do
     wishlist = users(:one).wishlists.create!(name: "Filtered List")
-    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4)
+    product = Store::Product.create!(name: "Desk Lamp", inventory_count: 4, price_cents: 2200, currency_code: "USD")
     wishlist.wishlist_products.create!(product: product)
 
     assert_equal [ wishlist ], Store::Wishlist.filter_by(

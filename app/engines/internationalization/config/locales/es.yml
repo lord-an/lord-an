@@ -63,6 +63,8 @@ es:
       confirm_delete: ¿Está seguro de que desea eliminar este producto?
       name: Nombre
       description: Descripción
+      price: Precio en centavos
+      currency: Código de moneda de tres letras
       featured_image: Imagen principal
       inventory_count: Cantidad disponible
       translations: Traducciones del producto
@@ -119,6 +121,35 @@ es:
       product_count:
         one: "%{count} producto"
         other: "%{count} productos"
+  commerce:
+    cart:
+      title: Carrito
+      add_item: Añadir al carrito
+      item_added: Artículo añadido al carrito.
+      updated: Carrito actualizado.
+      removed: Artículo eliminado del carrito.
+      update: Actualizar
+      remove: Eliminar
+      subtotal: Subtotal
+      create_order: Crear pedido sin pagar
+      payment_unavailable: El pago aún no está disponible. Crear un pedido no genera cargos ni reserva existencias.
+      empty: El carrito está vacío.
+      invalid_quantity: Introduzca una cantidad válida.
+      exceeds_inventory: supera las existencias disponibles.
+      stock_changed: Las existencias han cambiado. Revise el carrito antes de continuar.
+      mixed_currencies: Los artículos de un pedido deben usar la misma moneda.
+      price_unavailable: Este producto aún no está disponible para su compra.
+    orders:
+      title: Tus pedidos
+      number: "Pedido n.º %{id}"
+      status_label: Estado
+      total: Total
+      pending_payment: Pedido creado. No se ha cobrado ningún pago.
+      payment_unavailable: Este pedido está pendiente de integrar el pago. No se ha cobrado ni reservado existencias.
+      status:
+        pending_payment: Pendiente de pago
+        paid: Pagado
+        cancelled: Cancelado
   date:
     formats:
       default: "%d/%m/%Y"

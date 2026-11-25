@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_25_140702) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_25_150003) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -76,6 +76,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_25_140702) do
     t.integer "wishlists_count", default: 0, null: false
     t.integer "reviews_count", default: 0, null: false
     t.decimal "rating", precision: 2, scale: 1, default: "0.0"
+    t.integer "price_cents", default: 0, null: false
+    t.string "currency_code"
   end
 
   create_table "store_reviews", force: :cascade do |t|

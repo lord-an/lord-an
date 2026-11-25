@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   mount Portal::Engine => "/portal"
   mount Store::Engine => "/store"
   mount Internationalization::Engine => "/internationalization"
+  mount Commerce::Engine => "/commerce"
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

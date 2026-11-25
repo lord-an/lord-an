@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_25_140702) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_25_150003) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -49,6 +49,47 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_25_140702) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "commerce_cart_items", force: :cascade do |t|
+    t.integer "cart_id", null: false
+    t.integer "product_id", null: false
+    t.integer "quantity", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id", "product_id"], name: "index_commerce_cart_items_on_cart_id_and_product_id", unique: true
+    t.index ["cart_id"], name: "index_commerce_cart_items_on_cart_id"
+    t.index ["product_id"], name: "index_commerce_cart_items_on_product_id"
+  end
+
+  create_table "commerce_carts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_commerce_carts_on_user_id", unique: true
+  end
+
+  create_table "commerce_order_items", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "product_id"
+    t.string "product_name", null: false
+    t.integer "quantity", null: false
+    t.integer "unit_price_cents", null: false
+    t.integer "total_cents", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_commerce_order_items_on_order_id"
+    t.index ["product_id"], name: "index_commerce_order_items_on_product_id"
+  end
+
+  create_table "commerce_orders", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "status", default: "pending_payment", null: false
+    t.string "currency_code", null: false
+    t.integer "total_cents", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_commerce_orders_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "ip_address"
@@ -76,6 +117,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_25_140702) do
     t.integer "wishlists_count", default: 0, null: false
     t.integer "reviews_count", default: 0, null: false
     t.decimal "rating", precision: 2, scale: 1, default: "0.0"
+    t.integer "price_cents", default: 0, null: false
+    t.string "currency_code"
   end
 
   create_table "store_reviews", force: :cascade do |t|
@@ -145,6 +188,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_25_140702) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "commerce_cart_items", "commerce_carts", column: "cart_id"
+  add_foreign_key "commerce_cart_items", "store_products", column: "product_id", on_delete: :cascade
+  add_foreign_key "commerce_carts", "users"
+  add_foreign_key "commerce_order_items", "commerce_orders", column: "order_id"
+  add_foreign_key "commerce_order_items", "store_products", column: "product_id", on_delete: :nullify
+  add_foreign_key "commerce_orders", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "store_product_translations", "store_products", column: "product_id"
   add_foreign_key "store_reviews", "store_products", column: "product_id"

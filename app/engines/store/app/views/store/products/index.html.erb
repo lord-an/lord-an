@@ -1,6 +1,6 @@
 <h1><%= t ".title" %></h1>
 
-<%= link_to t("store.products.new"), new_product_path if authenticated? %>
+<%= link_to t("store.products.new"), new_product_path if Current.user&.admin? %>
 <%= link_to t("authenticate.sign_up"), "/authenticate/registrations/new" unless authenticated? %>
 <%= link_to t("authenticate.log_in"), "/authenticate/session/new" unless authenticated? %>
 
@@ -8,6 +8,11 @@
   <% @products.each do |product| %>
     <div>
       <%= link_to product.localized_name, product_path(product) %>
+      <% if product.price_set? %>
+        <p><%= number_to_currency(product.price_cents / 100.0, unit: product.currency_code + " ") %></p>
+      <% else %>
+        <p><%= t "commerce.cart.price_unavailable" %></p>
+      <% end %>
     </div>
   <% end %>
 </div>

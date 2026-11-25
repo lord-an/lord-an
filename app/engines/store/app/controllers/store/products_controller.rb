@@ -57,7 +57,7 @@ module Store
       end
 
       def product_params
-        params.expect(product: [ :name, :description, :featured_image, :inventory_count,
+        params.expect(product: [ :name, :description, :featured_image, :inventory_count, :price_cents, :currency_code,
           { translations_attributes: [ [ :id, :locale, :name, :description ] ] } ])
       end
 

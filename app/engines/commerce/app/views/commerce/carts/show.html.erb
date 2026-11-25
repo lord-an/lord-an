@@ -1,0 +1,31 @@
+<h1><%= t "commerce.cart.title" %></h1>
+
+<% if @items.empty? %>
+  <p><%= t "commerce.cart.empty" %></p>
+<% else %>
+  <ul>
+    <% @items.each do |item| %>
+      <li>
+        <%= item.product.localized_name %>
+        <%= number_to_currency(item.product.price_cents / 100.0, unit: "#{item.product.currency_code} ") %>
+        <%= form_with model: item, url: cart_item_path(item), scope: :cart_item, method: :patch do |form| %>
+          <%= form.number_field :quantity, min: 1, max: item.product.inventory_count, required: true %>
+          <%= form.submit t("commerce.cart.update") %>
+        <% end %>
+        <%= button_to t("commerce.cart.remove"), cart_item_path(item), method: :delete %>
+      </li>
+    <% end %>
+  </ul>
+
+  <% if @currencies.one? %>
+    <% currency = @currencies.first %>
+    <p><%= t("commerce.cart.subtotal") %>: <%= number_to_currency(@cart.total_cents / 100.0, unit: "#{currency} ") %></p>
+  <% else %>
+    <p><%= t "commerce.cart.mixed_currencies" %></p>
+  <% end %>
+  <p><%= t "commerce.cart.payment_unavailable" %></p>
+  <%= button_to t("commerce.cart.create_order"), checkout_cart_path, method: :post %>
+<% end %>
+
+<p><%= link_to t("store.navigation.home"), "/store" %></p>
+<p><%= link_to t("commerce.orders.title"), orders_path %></p>

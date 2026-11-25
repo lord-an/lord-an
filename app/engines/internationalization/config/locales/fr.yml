@@ -63,6 +63,8 @@ fr:
       confirm_delete: Voulez-vous vraiment supprimer ce produit ?
       name: Nom
       description: Description
+      price: Prix en centimes
+      currency: Code de devise à trois lettres
       featured_image: Image principale
       inventory_count: Quantité en stock
       translations: Traductions du produit
@@ -119,6 +121,35 @@ fr:
       product_count:
         one: "%{count} produit"
         other: "%{count} produits"
+  commerce:
+    cart:
+      title: Panier
+      add_item: Ajouter au panier
+      item_added: Article ajouté au panier.
+      updated: Panier mis à jour.
+      removed: Article retiré du panier.
+      update: Mettre à jour
+      remove: Retirer
+      subtotal: Sous-total
+      create_order: Créer une commande non payée
+      payment_unavailable: Le paiement n’est pas encore disponible. La création d’une commande ne vous facture pas et ne réserve pas de stock.
+      empty: Votre panier est vide.
+      invalid_quantity: Saisissez une quantité valide.
+      exceeds_inventory: dépasse le stock disponible.
+      stock_changed: Le stock a changé. Vérifiez votre panier.
+      mixed_currencies: Tous les articles d’une commande doivent utiliser la même devise.
+      price_unavailable: Ce produit n’est pas encore disponible à l’achat.
+    orders:
+      title: Vos commandes
+      number: "Commande n° %{id}"
+      status_label: Statut
+      total: Total
+      pending_payment: Commande créée. Aucun paiement n’a été effectué.
+      payment_unavailable: Cette commande attend l’intégration du paiement. Aucun paiement n’a été effectué et le stock n’a pas été réservé.
+      status:
+        pending_payment: En attente de paiement
+        paid: Payée
+        cancelled: Annulée
   date:
     formats:
       default: "%d/%m/%Y"

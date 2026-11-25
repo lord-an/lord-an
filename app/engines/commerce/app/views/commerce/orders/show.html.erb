@@ -1,0 +1,14 @@
+<h1><%= t("commerce.orders.number", id: @order.id) %></h1>
+<p><%= t("commerce.orders.status_label") %>: <%= t("commerce.orders.status.#{@order.status}") %></p>
+
+<ul>
+  <% @order.items.each do |item| %>
+    <li>
+      <%= item.product_name %> × <%= item.quantity %>
+      — <%= number_to_currency(item.total_cents / 100.0, unit: "#{@order.currency_code} ") %>
+    </li>
+  <% end %>
+</ul>
+
+<p><%= t("commerce.orders.total") %>: <%= number_to_currency(@order.total_cents / 100.0, unit: "#{@order.currency_code} ") %></p>
+<p><%= t "commerce.orders.payment_unavailable" %></p>

@@ -63,6 +63,8 @@ en:
       confirm_delete: Are you sure?
       name: Name
       description: Description
+      price: Price in cents
+      currency: Three-letter currency code
       featured_image: Featured image
       inventory_count: Inventory count
       translations: Product translations
@@ -119,6 +121,35 @@ en:
       product_count:
         one: "%{count} product"
         other: "%{count} products"
+  commerce:
+    cart:
+      title: Shopping cart
+      add_item: Add to cart
+      item_added: Item added to your cart.
+      updated: Cart updated.
+      removed: Item removed from your cart.
+      update: Update
+      remove: Remove
+      subtotal: Subtotal
+      create_order: Create unpaid order
+      payment_unavailable: Payment is not available yet. Creating an order does not charge you or reserve stock.
+      empty: Your cart is empty.
+      invalid_quantity: Enter a valid quantity.
+      exceeds_inventory: is greater than the available inventory.
+      stock_changed: Inventory changed. Review your cart before continuing.
+      mixed_currencies: Items in one order must use the same currency.
+      price_unavailable: This product is not available for purchase yet.
+    orders:
+      title: Your orders
+      number: "Order #%{id}"
+      status_label: Status
+      total: Total
+      pending_payment: Order created. Payment has not been collected.
+      payment_unavailable: This order is awaiting payment integration. No payment has been taken and inventory has not been reserved.
+      status:
+        pending_payment: Awaiting payment
+        paid: Paid
+        cancelled: Cancelled
   date:
     formats:
       default: "%m/%d/%Y"

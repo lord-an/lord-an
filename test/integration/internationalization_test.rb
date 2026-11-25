@@ -88,7 +88,7 @@ class InternationalizationTest < ActionDispatch::IntegrationTest
   end
 
   test "product names and rich-text descriptions fall back and localize by locale" do
-    product = Store::Product.create!(name: "Lamp", inventory_count: 2)
+    product = Store::Product.create!(name: "Lamp", inventory_count: 2, price_cents: 1800, currency_code: "USD")
     product.update!(description: "A useful lamp.")
     translation = product.translations.create!(locale: "fr", name: "Lampe")
     translation.update!(description: "Une lampe de bureau.")
@@ -120,6 +120,8 @@ class InternationalizationTest < ActionDispatch::IntegrationTest
         name: "Lamp",
         description: "A useful lamp.",
         inventory_count: 2,
+        price_cents: 1800,
+        currency_code: "USD",
         translations_attributes: {
           "0" => { locale: "fr", name: "Lampe", description: "Une lampe de bureau." },
           "1" => { locale: "es", name: "Lámpara", description: "Una lámpara de escritorio." }
