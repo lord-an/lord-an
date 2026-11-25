@@ -49,6 +49,8 @@ es:
       updated: Configuración actualizada.
       current_password_incorrect: es incorrecta
   store:
+    authorization:
+      admin_required: Solo los administradores de la tienda pueden gestionar productos.
     navigation:
       home: Tienda
       back: Volver

@@ -101,7 +101,7 @@ class InternationalizationTest < ActionDispatch::IntegrationTest
   end
 
   test "product editor exposes separate French and Spanish translation fields" do
-    sign_in_as users(:one)
+    sign_in_as_admin users(:one)
 
     get "/store/products/new"
 
@@ -112,7 +112,7 @@ class InternationalizationTest < ActionDispatch::IntegrationTest
   end
 
   test "product creation saves translated names and descriptions" do
-    sign_in_as users(:one)
+    sign_in_as_admin users(:one)
     patch "/internationalization/locale", params: { locale: "fr", return_to: "/store/products/new" }
 
     post "/store/products", params: {
@@ -139,4 +139,10 @@ class InternationalizationTest < ActionDispatch::IntegrationTest
     assert_select "trix-editor", false
     assert_includes response.body, "Une lampe de bureau."
   end
+
+  private
+    def sign_in_as_admin(user)
+      user.update!(admin: true)
+      sign_in_as(user)
+    end
 end

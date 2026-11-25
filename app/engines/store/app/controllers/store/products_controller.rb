@@ -2,6 +2,7 @@ module Store
   class ProductsController < ApplicationController
     allow_unauthenticated_access only: %i[ index show ]
     before_action :set_product, only: %i[ show edit update destroy ]
+    before_action :require_admin, only: %i[ new create edit update destroy ]
 
     def index
       @products = Product.all
@@ -47,6 +48,12 @@ module Store
     private
       def set_product
         @product = Product.find(params[:id])
+      end
+
+      def require_admin
+        return if Current.user&.admin?
+
+        redirect_to "/store", alert: t("store.authorization.admin_required")
       end
 
       def product_params

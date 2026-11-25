@@ -49,6 +49,8 @@ fr:
       updated: Paramètres mis à jour.
       current_password_incorrect: est incorrect
   store:
+    authorization:
+      admin_required: Seuls les administrateurs de la boutique peuvent gérer les produits.
     navigation:
       home: Boutique
       back: Retour

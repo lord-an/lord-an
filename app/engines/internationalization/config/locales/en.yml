@@ -49,6 +49,8 @@ en:
       updated: Settings updated.
       current_password_incorrect: is incorrect
   store:
+    authorization:
+      admin_required: Only store administrators can manage products.
     navigation:
       home: Store
       back: Back
