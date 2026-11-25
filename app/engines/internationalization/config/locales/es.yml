@@ -1,39 +1,24 @@
 es:
   home:
     title: Lord An
-    description: Una tienda con varios idiomas creada a partir de una aplicación anfitriona de Rails y motores montables que colaboran.
-    engines_title: Cómo funciona la aplicación
-    engines:
-      authenticate:
-        title: Autenticación
-        description: Gestiona el registro, el inicio y cierre de sesión y la recuperación de contraseñas. Los usuarios y las sesiones se almacenan en la aplicación anfitriona.
-        link: Crear una cuenta o iniciar sesión
-        path: /authenticate/registrations/new
-      portal:
-        title: Portal
-        description: Ofrece configuración de cuenta a los clientes con sesión iniciada mediante los modelos compartidos de usuario y sesión de la aplicación anfitriona.
-        link: Configuración de la cuenta
-        path: /portal
-      luna_style:
-        title: LunaStyle
-        description: Proporciona tokens de diseño compartidos y selección de tema para la aplicación anfitriona y todos los motores montables.
-        link: Administración de temas
-        path: /luna-style/theme
-      store:
-        title: Tienda
-        description: Gestiona el catálogo, el inventario, las reseñas, las listas de deseos y las alertas de disponibilidad. Solo los administradores pueden gestionar productos.
-        link: Explorar la tienda
-        path: /store
-      commerce:
-        title: Comercio
-        description: Crea carritos y resúmenes de pedidos sin pagar a partir de los productos de la tienda. No se han implementado los pagos ni la reserva de inventario.
-        link: Ver tu carrito
-        path: /commerce/cart
-      internationalization:
-        title: Internacionalización
-        description: Comparte los idiomas disponibles y la selección de idioma entre la aplicación anfitriona y los motores montables.
-        link: Configuración de idioma
-        path: /internationalization/settings
+    eyebrow: Un pequeño motivo para ilusionarse
+    hero_title: Encuentra tu próximo favorito.
+    description: Explora el catálogo, lee opiniones de clientes y guarda en tu lista de deseos lo que te guste.
+    browse_products: Explorar la tienda
+    create_account: Crear una cuenta
+    art_caption: Buenas cosas, aquí
+    highlights_eyebrow: Hazla tuya
+    highlights_title: Mucho más que un catálogo
+    highlights:
+      catalog:
+        title: Explora a tu ritmo
+        description: Descubre productos y consulta los detalles que necesitas para elegir con confianza.
+      reviews:
+        title: Opiniones de clientes
+        description: Lee reseñas y comparte tu experiencia con los productos que te gustan.
+      wishlists:
+        title: Guarda tus favoritos
+        description: Añade productos a tu lista de deseos y recibe avisos cuando vuelvan a estar disponibles.
   internationalization:
     languages:
       en: Inglés

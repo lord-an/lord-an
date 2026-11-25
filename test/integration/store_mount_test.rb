@@ -8,18 +8,14 @@ class StoreMountTest < ActionDispatch::IntegrationTest
     assert_select "h1", "Products"
   end
 
-  test "the application root explains the app and its engines" do
+  test "the application root introduces the store and customer features" do
     get "/"
 
     assert_response :success
-    assert_select "h1", "Lord An"
-    assert_select "dt", "Authentication"
-    assert_select "dt", "Portal"
-    assert_select "dt", "LunaStyle"
-    assert_select "dt", "Store"
-    assert_select "dt", "Commerce"
-    assert_select "dt", "Internationalization"
-    assert_select "a[href='/store']", "Browse the store"
+    assert_select "h1", "Find your next favorite."
+    assert_select "h2", "More than a catalog"
+    assert_select "a[href='/store']", "Explore the store"
+    assert_select "a[href='/authenticate/registrations/new']", "Create an account"
   end
 
   test "mounts signup and login through separate engines" do

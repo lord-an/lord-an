@@ -1,39 +1,24 @@
 en:
   home:
     title: Lord An
-    description: A localized storefront application built from a Rails host app and collaborating mountable engines.
-    engines_title: How the application works
-    engines:
-      authenticate:
-        title: Authentication
-        description: Handles account registration, sign-in, sign-out, and password recovery. User and session records live in the host application.
-        link: Create an account or sign in
-        path: /authenticate/registrations/new
-      portal:
-        title: Portal
-        description: Provides signed-in customers with account settings, using the shared host user and authentication session.
-        link: Account settings
-        path: /portal
-      luna_style:
-        title: LunaStyle
-        description: Provides shared design tokens and theme selection for the host application and every mounted engine.
-        link: Theme administration
-        path: /luna-style/theme
-      store:
-        title: Store
-        description: Owns the product catalog, inventory, reviews, wishlists, and stock notifications. Product management is restricted to administrators.
-        link: Browse the store
-        path: /store
-      commerce:
-        title: Commerce
-        description: Builds customer carts and unpaid order snapshots from Store products. Payment collection and inventory reservation are not implemented.
-        link: View your cart
-        path: /commerce/cart
-      internationalization:
-        title: Internationalization
-        description: Shares supported languages and locale selection across the host application and mounted engines.
-        link: Language settings
-        path: /internationalization/settings
+    eyebrow: A little something to look forward to
+    hero_title: Find your next favorite.
+    description: Explore the catalog, read customer reviews, and save the things you love to a wishlist.
+    browse_products: Explore the store
+    create_account: Create an account
+    art_caption: Good things, found here
+    highlights_eyebrow: Make it yours
+    highlights_title: More than a catalog
+    highlights:
+      catalog:
+        title: Browse at your pace
+        description: Explore products and get the details you need to choose with confidence.
+      reviews:
+        title: Hear from customers
+        description: Read reviews and share your experience with the products you love.
+      wishlists:
+        title: Keep favorites close
+        description: Save products to your wishlist and get notified when favorites are back in stock.
   internationalization:
     languages:
       en: English
