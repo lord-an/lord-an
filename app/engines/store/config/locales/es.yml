@@ -1,0 +1,5 @@
+es:
+  store:
+    products:
+      index:
+        title: Productos

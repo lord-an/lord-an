@@ -1,0 +1,11 @@
+<% if product.inventory_count.positive? %>
+  <p><%= t("store.inventory.in_stock", count: product.inventory_count) %></p>
+<% else %>
+  <p><%= t "store.inventory.out_of_stock" %></p>
+  <p><%= t "store.inventory.notify_when_available" %></p>
+
+  <%= form_with model: [ product, Store::Subscriber.new ] do |form| %>
+    <%= form.email_field :email, placeholder: "you@example.com", required: true %>
+    <%= form.submit t("store.inventory.notify_me") %>
+  <% end %>
+<% end %>

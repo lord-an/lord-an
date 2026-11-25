@@ -1,0 +1,26 @@
+<h1><%= t "authenticate.sign_up" %></h1>
+
+<%= form_with model: @user, url: "/authenticate/registrations" do |form| %>
+  <% if @user.errors.any? %>
+    <p class="error"><%= @user.errors.full_messages.first %></p>
+  <% end %>
+
+  <div>
+    <%= form.label :email_address, t("authenticate.email") %>
+    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username" %>
+  </div>
+
+  <div>
+    <%= form.label :password, t("authenticate.password") %>
+    <%= form.password_field :password, required: true, autocomplete: "new-password" %>
+  </div>
+
+  <div>
+    <%= form.label :password_confirmation, t("authenticate.password_confirmation") %>
+    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password" %>
+  </div>
+
+  <%= form.submit t("authenticate.create_account") %>
+<% end %>
+
+<%= link_to t("authenticate.log_in"), "/authenticate/session/new" %>

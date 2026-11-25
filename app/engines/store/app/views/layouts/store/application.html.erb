@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Store</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= yield :head %>
+
+  <%= stylesheet_link_tag "store/application", "actiontext", media: "all" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body>
+  <nav>
+    <%= link_to t("store.navigation.home"), root_path %>
+    <%= link_to t("internationalization.settings.title"), "/internationalization/settings" %>
+    <% if authenticated? %>
+      <%= link_to t("store.navigation.wishlists"), wishlists_path %>
+      <%= link_to t("portal.settings.title"), "/portal/settings" %>
+      <%= button_to t("authenticate.log_out"), "/authenticate/session", method: :delete %>
+    <% else %>
+      <%= link_to t("authenticate.sign_up"), "/authenticate/registrations/new" %>
+      <%= link_to t("authenticate.log_in"), "/authenticate/session/new" %>
+    <% end %>
+  </nav>
+
+  <div class="notice"><%= flash[:notice] %></div>
+  <div class="alert"><%= flash[:alert] %></div>
+
+  <main>
+    <%= yield %>
+  </main>
+
+</body>
+</html>

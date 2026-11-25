@@ -1,0 +1,36 @@
+<h1><%= t "portal.settings.edit_title" %></h1>
+
+<%= form_with model: @user, url: "/portal/settings", method: :patch do |form| %>
+  <% if @user.errors.any? %>
+    <p class="error"><%= @user.errors.full_messages.first %></p>
+  <% end %>
+
+  <div>
+    <%= form.label :email_address, t("portal.settings.email") %>
+    <%= form.email_field :email_address, required: true, autocomplete: "username" %>
+  </div>
+
+  <div>
+    <%= form.label :preferred_locale, t("internationalization.settings.language") %>
+    <%= form.select :preferred_locale, locale_options %>
+  </div>
+
+  <div>
+    <%= form.label :current_password %>
+    <%= form.password_field :current_password, autocomplete: "current-password" %>
+  </div>
+
+  <div>
+    <%= form.label :password, t("portal.settings.new_password") %>
+    <%= form.password_field :password, autocomplete: "new-password" %>
+  </div>
+
+  <div>
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <%= form.submit t("portal.settings.save") %>
+<% end %>
+
+<%= link_to t("portal.settings.cancel"), "/portal/settings" %>

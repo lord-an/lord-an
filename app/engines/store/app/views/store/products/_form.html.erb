@@ -1,0 +1,47 @@
+<%= form_with model: product do |form| %>
+  <% if form.object.errors.any? %>
+    <p class="error"><%= form.object.errors.full_messages.first %></p>
+  <% end %>
+
+  <div>
+    <%= form.label :name, t("store.products.name"), style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :description, t("store.products.description"), style: "display: block" %>
+    <%= form.rich_textarea :description %>
+  </div>
+
+  <fieldset>
+    <legend><%= t "store.products.translations" %></legend>
+    <%= form.fields_for :translations do |translation_form| %>
+      <section>
+        <h3><%= t "internationalization.languages.#{translation_form.object.locale}" %></h3>
+        <%= translation_form.hidden_field :locale %>
+        <div>
+          <%= translation_form.label :name, t("store.products.name") %>
+          <%= translation_form.text_field :name %>
+        </div>
+        <div>
+          <%= translation_form.label :description, t("store.products.description") %>
+          <%= translation_form.rich_textarea :description %>
+        </div>
+      </section>
+    <% end %>
+  </fieldset>
+
+  <div>
+    <%= form.label :featured_image, t("store.products.featured_image"), style: "display: block" %>
+    <%= form.file_field :featured_image, accept: "image/*" %>
+  </div>
+
+  <div>
+    <%= form.label :inventory_count, t("store.products.inventory_count"), style: "display: block" %>
+    <%= form.number_field :inventory_count %>
+  </div>
+
+  <div>
+    <%= form.submit t("store.products.save") %>
+  </div>
+<% end %>

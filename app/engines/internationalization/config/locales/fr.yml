@@ -1,0 +1,131 @@
+fr:
+  internationalization:
+    languages:
+      en: Anglais
+      fr: Français
+      es: Espagnol
+    settings:
+      title: Préférences linguistiques
+      description: Choisissez la langue utilisée dans toute l’application.
+      language: Langue
+      save: Enregistrer la langue
+    preference_saved: Préférence linguistique enregistrée.
+    invalid_locale: Veuillez choisir une langue prise en charge.
+    pluralization:
+      apples:
+        one: "%{count} pomme"
+        other: "%{count} pommes"
+  authenticate:
+    sign_up: S’inscrire
+    log_in: Se connecter
+    log_out: Se déconnecter
+    create_account: Créer un compte
+    forgot_password: Mot de passe oublié ?
+    welcome: Bienvenue ! Votre compte a été créé.
+    email: Adresse e-mail
+    password: Mot de passe
+    password_confirmation: Confirmation du mot de passe
+    try_again_later: Veuillez réessayer plus tard.
+    invalid_credentials: Adresse e-mail ou mot de passe incorrect.
+    reset_password: Réinitialiser votre mot de passe
+    choose_new_password: Choisir un nouveau mot de passe
+    email_reset_instructions: Envoyer les instructions de réinitialisation
+    update_password: Mettre à jour le mot de passe
+    password_reset_sent: Instructions de réinitialisation envoyées (si le compte existe).
+    password_reset: Le mot de passe a été réinitialisé.
+    passwords_mismatch: Les mots de passe ne correspondent pas.
+    invalid_reset_link: Le lien de réinitialisation est invalide ou a expiré.
+  portal:
+    settings:
+      title: Paramètres du compte
+      edit_title: Modifier les paramètres du compte
+      email: Adresse e-mail
+      language: Langue
+      edit: Modifier les paramètres
+      back_to_store: Retour à la boutique
+      new_password: Nouveau mot de passe
+      save: Enregistrer les paramètres
+      cancel: Annuler
+      updated: Paramètres mis à jour.
+      current_password_incorrect: est incorrect
+  store:
+    navigation:
+      home: Boutique
+      back: Retour
+      wishlists: Listes de souhaits
+    products:
+      title: Produits
+      new: Nouveau produit
+      edit: Modifier
+      delete: Supprimer
+      confirm_delete: Voulez-vous vraiment supprimer ce produit ?
+      name: Nom
+      description: Description
+      featured_image: Image principale
+      inventory_count: Quantité en stock
+      translations: Traductions du produit
+      save: Enregistrer le produit
+      created: Produit créé.
+      updated: Produit mis à jour.
+    inventory:
+      in_stock:
+        one: "%{count} en stock"
+        other: "%{count} en stock"
+      out_of_stock: Rupture de stock
+      notify_when_available: Prévenez-moi lorsque le produit sera disponible.
+      notify_me: Me prévenir
+    subscribers:
+      subscribed: Vous êtes maintenant abonné.
+      unsubscribed: Désabonnement effectué.
+      invalid_unsubscribe_link: Ce lien de désabonnement est invalide ou a expiré.
+    reviews:
+      title: Avis
+      new: Ajouter un avis
+      rating: Note
+      body: Votre avis
+      images: Images
+      submit: Envoyer l’avis
+      none_yet: Aucun avis pour le moment.
+      write: Rédiger un avis
+      log_in_to_write: Connectez-vous pour rédiger un avis
+      clear_filter: Effacer le filtre
+      filtered_by: Filtré par %{rating} étoiles
+      created: Votre avis a bien été enregistré.
+      review_count:
+        one: "%{count} avis"
+        other: "%{count} avis"
+      stars:
+        one: "%{count} étoile"
+        other: "%{count} étoiles"
+      view_image: Voir l’image en taille réelle (s’ouvre dans un nouvel onglet)
+    wishlists:
+      title: Vos listes de souhaits
+      new: Créer une liste de souhaits
+      edit: Modifier la liste de souhaits
+      copy: Copier le lien
+      move: Déplacer
+      remove: Retirer
+      added: Ajouté le %{date}
+      add_product: Ajouter à la liste de souhaits
+      default_name: Ma liste de souhaits
+      created: Votre liste de souhaits a été créée.
+      updated: Votre liste de souhaits a été mise à jour.
+      product_added: "%{product} ajouté à la liste de souhaits."
+      product_moved: "%{product} a été déplacé vers %{wishlist}."
+      product_already_exists: "%{product} figure déjà dans %{wishlist}."
+      product_removed: "%{product} retiré de la liste de souhaits."
+      product_count:
+        one: "%{count} produit"
+        other: "%{count} produits"
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+    month_names: [~, janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre]
+    abbr_month_names: [~, janv., févr., mars, avr., mai, juin, juil., août, sept., oct., nov., déc.]
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      short: "%d %b, %H:%M"
+      long: "%d %B %Y à %H:%M"

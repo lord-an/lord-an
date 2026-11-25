@@ -1,0 +1,32 @@
+<h1><%= t "store.reviews.new" %></h1>
+
+<%= form_with model: @review, url: product_reviews_path(@product) do |form| %>
+  <% if form.object.errors.any? %>
+    <div class="error"><%= form.object.errors.full_messages.to_sentence %></div>
+  <% end %>
+
+  <fieldset>
+    <legend><%= t "store.reviews.rating" %></legend>
+    <div class="rating">
+      <% 1.upto(5) do |value| %>
+        <%= form.radio_button :rating, value, required: true, class: "sr-only" %>
+        <%= form.label :rating, value: value do %>
+          <span aria-hidden="true">★</span>
+          <span class="sr-only"><%= pluralize(value, "star") %></span>
+        <% end %>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <div>
+    <%= form.label :body, t("store.reviews.body") %>
+    <%= form.textarea :body, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :images, t("store.reviews.images") %>
+    <%= form.file_field :images, multiple: true, accept: "image/*", capture: "environment" %>
+  </div>
+
+  <%= form.submit t("store.reviews.submit") %>
+<% end %>

@@ -1,0 +1,129 @@
+en:
+  internationalization:
+    languages:
+      en: English
+      fr: French
+      es: Spanish
+    settings:
+      title: Language settings
+      description: Choose the language used across the application.
+      language: Language
+      save: Save language
+    preference_saved: Language preference saved.
+    invalid_locale: Please choose a supported language.
+    pluralization:
+      apples:
+        one: "%{count} apple"
+        other: "%{count} apples"
+  authenticate:
+    sign_up: Sign up
+    log_in: Log in
+    log_out: Log out
+    create_account: Create account
+    forgot_password: Forgot password?
+    welcome: Welcome! Your account has been created.
+    email: Email address
+    password: Password
+    password_confirmation: Password confirmation
+    try_again_later: Try again later.
+    invalid_credentials: Try another email address or password.
+    reset_password: Reset your password
+    choose_new_password: Choose a new password
+    email_reset_instructions: Email reset instructions
+    update_password: Update password
+    password_reset_sent: Password reset instructions sent (if the account exists).
+    password_reset: Password has been reset.
+    passwords_mismatch: Passwords did not match.
+    invalid_reset_link: Password reset link is invalid or has expired.
+  portal:
+    settings:
+      title: Account settings
+      edit_title: Edit account settings
+      email: Email
+      language: Language
+      edit: Edit settings
+      back_to_store: Back to store
+      new_password: New password
+      save: Save settings
+      cancel: Cancel
+      updated: Settings updated.
+      current_password_incorrect: is incorrect
+  store:
+    navigation:
+      home: Store
+      back: Back
+      wishlists: Wishlists
+    products:
+      title: Products
+      new: New product
+      edit: Edit
+      delete: Delete
+      confirm_delete: Are you sure?
+      name: Name
+      description: Description
+      featured_image: Featured image
+      inventory_count: Inventory count
+      translations: Product translations
+      save: Save product
+      created: Product created.
+      updated: Product updated.
+    inventory:
+      in_stock:
+        one: "%{count} in stock"
+        other: "%{count} in stock"
+      out_of_stock: Out of stock
+      notify_when_available: Email me when available.
+      notify_me: Notify me
+    subscribers:
+      subscribed: You are now subscribed.
+      unsubscribed: Unsubscribed successfully.
+      invalid_unsubscribe_link: This unsubscribe link is invalid or has expired.
+    reviews:
+      title: Reviews
+      new: Add a review
+      rating: Rating
+      body: Review
+      images: Images
+      submit: Submit review
+      none_yet: None yet!
+      write: Write a review
+      log_in_to_write: Log in to write a review
+      clear_filter: Clear filter
+      filtered_by: Filtered by %{rating} stars
+      created: Review was created successfully.
+      review_count:
+        one: "%{count} review"
+        other: "%{count} reviews"
+      stars:
+        one: "%{count} star"
+        other: "%{count} stars"
+      view_image: View full-size image (opens in new tab)
+    wishlists:
+      title: Your wishlists
+      new: Create a wishlist
+      edit: Edit wishlist
+      copy: Copy to clipboard
+      move: Move
+      remove: Remove
+      added: Added %{date}
+      add_product: Add to wishlist
+      default_name: My Wishlist
+      created: Your wishlist was created successfully.
+      updated: Your wishlist has been updated successfully.
+      product_added: "%{product} added to wishlist."
+      product_moved: "%{product} has been moved to %{wishlist}."
+      product_already_exists: "%{product} is already on %{wishlist}."
+      product_removed: "%{product} removed from wishlist."
+      product_count:
+        one: "%{count} product"
+        other: "%{count} products"
+  date:
+    formats:
+      default: "%m/%d/%Y"
+      short: "%b %d"
+      long: "%B %d, %Y"
+  time:
+    formats:
+      default: "%m/%d/%Y %H:%M"
+      short: "%b %d, %H:%M"
+      long: "%B %d, %Y %H:%M"

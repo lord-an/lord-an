@@ -1,0 +1,10 @@
+<h1><%= t "authenticate.reset_password" %></h1>
+
+<%= form_with url: "/authenticate/passwords" do |form| %>
+  <div>
+    <%= form.label :email_address, t("authenticate.email") %>
+    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username" %>
+  </div>
+
+  <%= form.submit t("authenticate.email_reset_instructions") %>
+<% end %>

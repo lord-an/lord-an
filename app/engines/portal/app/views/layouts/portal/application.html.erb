@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Account settings</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "portal/application", media: "all" %>
+</head>
+<body>
+  <nav>
+    <%= link_to t("store.navigation.home"), "/store" %>
+    <%= link_to t("internationalization.settings.title"), "/internationalization/settings" %>
+    <%= button_to t("authenticate.log_out"), "/authenticate/session", method: :delete %>
+  </nav>
+
+  <div class="notice"><%= flash[:notice] %></div>
+  <div class="alert"><%= flash[:alert] %></div>
+
+  <main><%= yield %></main>
+</body>
+</html>

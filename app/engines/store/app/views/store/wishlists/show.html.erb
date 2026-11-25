@@ -1,0 +1,35 @@
+<h1><%= @wishlist.name %></h1>
+
+<%= tag.button t("store.wishlists.copy"),
+  data: {
+    controller: "clipboard",
+    action: "clipboard#copy",
+    clipboard_text_value: wishlist_url(@wishlist)
+  } %>
+
+<% if authenticated? && @wishlist.user == Current.user %>
+  <%= link_to t("store.products.edit"), edit_wishlist_path(@wishlist) %>
+  <%= button_to t("store.products.delete"), @wishlist, method: :delete, data: { turbo_confirm: t("store.products.confirm_delete") } %>
+<% end %>
+
+<h2><%= t("store.wishlists.product_count", count: @wishlist.products_count) %></h2>
+
+<% @wishlist.wishlist_products.includes(:product).each do |wishlist_product| %>
+  <div>
+    <%= link_to wishlist_product.product.localized_name, product_path(wishlist_product.product) %>
+    <small><%= t("store.wishlists.added", date: l(wishlist_product.created_at, format: :long)) %></small>
+
+    <% if authenticated? && @wishlist.user == Current.user %>
+      <% other_wishlists = Current.user.wishlists.excluding(@wishlist) %>
+      <% if other_wishlists.any? %>
+        <%= form_with url: wishlist_wishlist_product_path(@wishlist, wishlist_product), method: :patch do |form| %>
+          <%= form.collection_select :new_wishlist_id, other_wishlists, :id, :name %>
+          <%= form.submit t("store.wishlists.move") %>
+        <% end %>
+      <% end %>
+
+      <%= button_to t("store.wishlists.remove"), wishlist_wishlist_product_path(@wishlist, wishlist_product),
+        method: :delete, data: { turbo_confirm: t("store.products.confirm_delete") } %>
+    <% end %>
+  </div>
+<% end %>

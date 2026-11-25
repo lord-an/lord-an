@@ -1,0 +1,148 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 1rem;
+}
+
+nav {
+  justify-content: flex-end;
+  display: flex;
+  font-size: 0.875em;
+  gap: 0.5rem;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+nav a {
+  display: inline-block;
+}
+
+main {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.alert,
+.error {
+  color: red;
+}
+
+.notice {
+  color: green;
+}
+
+section.product {
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+}
+
+section.product img {
+  border-radius: 8px;
+  flex-basis: 50%;
+  max-width: 50%;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.rating {
+  display: flex;
+}
+
+.rating label,
+.gray {
+  color: lightgray;
+}
+
+.rating input:is(:checked, :focus) + label,
+.rating label:has(~ input:is(:checked, :focus)),
+.rating label:hover,
+.rating label:has(~ input + label:hover),
+.gold {
+  color: gold;
+}
+
+.rating input:focus-visible + label {
+  outline: 0.2em solid;
+  outline-offset: 2px;
+}
+
+section.reviews {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  margin-top: 2rem;
+  gap: 2rem;
+}
+
+.review__summary {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+.review__stars {
+  width: 1rem;
+}
+
+.review__bars {
+  position: relative;
+  flex: 1;
+  display: flex;
+  margin: 0 5px;
+}
+
+.review__bar--background {
+  background: #eee;
+  border-radius: 15px;
+  flex: 1;
+  height: 12px;
+}
+
+.review__bar {
+  background: gold;
+  border-radius: 15px;
+  position: absolute;
+  inset-block: 0;
+}
+
+.review__percentage {
+  text-align: right;
+  width: 2.5rem;
+}
+
+.review {
+  padding: 1rem;
+}
+
+.review__images {
+  margin-top: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

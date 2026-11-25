@@ -1,0 +1,49 @@
+<section class="reviews">
+  <aside>
+    <h2><%= t "store.reviews.title" %></h2>
+    <% if product.reviews_count.positive? %>
+      <div role="img" aria-label="<%= product.rating.round %> out of 5 stars">
+        <% 5.times do |index| %>
+          <%= tag.span "★", class: index < product.rating.round ? "gold" : "gray", aria: { hidden: true } %>
+        <% end %>
+        <%= product.rating %> out of 5
+      </div>
+      <div><%= t("store.reviews.review_count", count: product.reviews_count) %></div>
+
+      <div>
+        <% 5.downto(1) do |value| %>
+          <%= link_to product_path(product, rating: value),
+            aria: { label: "#{t("store.reviews.stars", count: value)} — #{product.rating_percentage(value)}% of reviews" } do %>
+            <div class="review__summary" aria-hidden="true">
+              <span class="review__stars"><%= value %></span>
+              <span class="gold">★</span>
+              <span class="review__bars">
+                <span class="review__bar--background"></span>
+                <span class="review__bar" style="width: <%= product.rating_percentage(value) %>%;"></span>
+              </span>
+              <span class="review__percentage"><%= product.rating_percentage(value) %>%</span>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p><%= t "store.reviews.none_yet" %></p>
+    <% end %>
+
+    <% if authenticated? %>
+      <%= link_to t("store.reviews.write"), new_product_review_path(product) %>
+    <% else %>
+      <%= link_to t("store.reviews.log_in_to_write"), "/authenticate/session/new" %>
+    <% end %>
+  </aside>
+
+  <div>
+    <% if params[:rating].present? %>
+      <p>
+        <%= t("store.reviews.filtered_by", rating: params[:rating].to_i) %>.
+        <%= link_to t("store.reviews.clear_filter"), product_path(product) %>
+      </p>
+    <% end %>
+    <%= render reviews %>
+  </div>
+</section>

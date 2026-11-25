@@ -1,0 +1,15 @@
+<% if authenticated? %>
+  <%= form_with url: product_wishlist_path(product) do |form| %>
+    <% if Current.user.wishlists.any? %>
+      <div>
+        <%= form.collection_select :wishlist_id, Current.user.wishlists, :id, :name %>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.submit t("store.wishlists.add_product") %>
+    </div>
+  <% end %>
+<% else %>
+  <%= link_to t("store.wishlists.add_product"), "/authenticate/registrations/new" %>
+<% end %>

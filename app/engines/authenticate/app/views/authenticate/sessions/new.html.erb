@@ -1,0 +1,18 @@
+<h1><%= t "authenticate.log_in" %></h1>
+
+<%= form_with url: "/authenticate/session" do |form| %>
+  <div>
+    <%= form.label :email_address, t("authenticate.email") %>
+    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username" %>
+  </div>
+
+  <div>
+    <%= form.label :password, t("authenticate.password") %>
+    <%= form.password_field :password, required: true, autocomplete: "current-password" %>
+  </div>
+
+  <%= form.submit t("authenticate.log_in") %>
+<% end %>
+
+<%= link_to t("authenticate.sign_up"), "/authenticate/registrations/new" %>
+<%= link_to t("authenticate.forgot_password"), "/authenticate/passwords/new" %>
