@@ -4,6 +4,10 @@ module Store
     before_action :set_subscriber
 
     def show
+      redirect_to root_path, alert: t("store.subscribers.invalid_unsubscribe_link") unless @subscriber
+    end
+
+    def destroy
       if @subscriber
         @subscriber.destroy!
         redirect_to root_path, notice: t("store.subscribers.unsubscribed")

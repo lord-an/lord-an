@@ -41,7 +41,8 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
 
   test "update" do
     assert_changes -> { @user.reload.password_digest } do
-      put "/authenticate/passwords/#{@user.generate_token_for(:password_reset)}", params: { password: "new", password_confirmation: "new" }
+      put "/authenticate/passwords/#{@user.generate_token_for(:password_reset)}",
+        params: { password: "a secure new password", password_confirmation: "a secure new password" }
       assert_redirected_to "/authenticate/session/new"
     end
 
@@ -52,12 +53,26 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   test "update with non matching passwords" do
     token = @user.generate_token_for(:password_reset)
     assert_no_changes -> { @user.reload.password_digest } do
-      put "/authenticate/passwords/#{token}", params: { password: "no", password_confirmation: "match" }
+      put "/authenticate/passwords/#{token}",
+        params: { password: "a secure new password", password_confirmation: "a different password" }
       assert_redirected_to "/authenticate/passwords/#{token}/edit"
     end
 
     follow_redirect!
-    assert_notice "Passwords did not match"
+    assert_notice "match"
+  end
+
+  test "update rejects passwords below the minimum length" do
+    token = @user.generate_token_for(:password_reset)
+
+    assert_no_changes -> { @user.reload.password_digest } do
+      put "/authenticate/passwords/#{token}",
+        params: { password: "short", password_confirmation: "short" }
+      assert_redirected_to "/authenticate/passwords/#{token}/edit"
+    end
+
+    follow_redirect!
+    assert_notice "too short"
   end
 
   private

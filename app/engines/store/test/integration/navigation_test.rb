@@ -44,7 +44,23 @@ class NavigationTest < ActionDispatch::IntegrationTest
 
     get "/store/unsubscribe", params: { token: token }
 
+    assert_response :success
+    assert_select "h1", "Unsubscribe from stock alerts"
+    assert_select "form[action^='/store/unsubscribe?token='][method='post']"
+    assert Store::Subscriber.exists?(subscriber.id)
+
+    delete "/store/unsubscribe", params: { token: token }
+
     assert_redirected_to "/store/"
     assert_not Store::Subscriber.exists?(subscriber.id)
+  end
+
+  test "invalid unsubscribe tokens do not change subscription state" do
+    subscriber = Store::Subscriber.find_by!(email: "david@example.org")
+
+    get "/store/unsubscribe", params: { token: "invalid-token" }
+
+    assert_redirected_to "/store/"
+    assert Store::Subscriber.exists?(subscriber.id)
   end
 end

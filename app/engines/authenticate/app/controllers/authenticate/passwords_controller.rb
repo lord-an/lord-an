@@ -26,7 +26,7 @@ module Authenticate
         @user.sessions.destroy_all
         redirect_to "/authenticate/session/new", notice: t("authenticate.password_reset")
       else
-        redirect_to "/authenticate/passwords/#{params[:token]}/edit", alert: t("authenticate.passwords_mismatch")
+        redirect_to "/authenticate/passwords/#{params[:token]}/edit", alert: @user.errors.full_messages.to_sentence
       end
     end
 

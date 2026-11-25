@@ -59,6 +59,7 @@ es:
     welcome: ¡Bienvenido! Su cuenta se ha creado.
     email: Correo electrónico
     password: Contraseña
+    password_minimum_length: Use al menos 12 caracteres.
     password_confirmation: Confirmación de contraseña
     try_again_later: Inténtelo de nuevo más tarde.
     invalid_credentials: El correo electrónico o la contraseña no son válidos.
@@ -117,6 +118,9 @@ es:
       subscribed: Se ha suscrito correctamente.
       unsubscribed: Se ha cancelado la suscripción.
       invalid_unsubscribe_link: El enlace para cancelar la suscripción no es válido o ha caducado.
+      unsubscribe_title: Cancelar alertas de disponibilidad
+      unsubscribe_confirmation: Confirme que ya no desea recibir correos cuando este producto vuelva a estar disponible.
+      unsubscribe: Cancelar suscripción
     reviews:
       title: Reseñas
       new: Añadir una reseña
@@ -197,3 +201,6 @@ es:
       default: "%d/%m/%Y %H:%M"
       short: "%d %b, %H:%M"
       long: "%d de %B de %Y a las %H:%M"
+  errors:
+    messages:
+      too_short: "es demasiado corto (el mínimo es %{count} caracteres)"

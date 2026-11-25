@@ -22,7 +22,8 @@
 
   <div>
     <%= form.label :password, t("portal.settings.new_password") %>
-    <%= form.password_field :password, autocomplete: "new-password" %>
+    <%= form.password_field :password, minlength: 12, autocomplete: "new-password" %>
+    <small><%= t "authenticate.password_minimum_length" %></small>
   </div>
 
   <div>

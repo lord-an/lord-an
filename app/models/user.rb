@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :wishlists, class_name: "Store::Wishlist", dependent: :destroy
 
   validates :preferred_locale, inclusion: { in: Internationalization::SUPPORTED_LOCALES }
+  validates :password, length: { minimum: 12 }, if: -> { password.present? }
 
   normalizes :email_address, with: ->(email) { email.strip.downcase }
 

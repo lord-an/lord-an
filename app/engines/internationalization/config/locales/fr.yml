@@ -59,6 +59,7 @@ fr:
     welcome: Bienvenue ! Votre compte a été créé.
     email: Adresse e-mail
     password: Mot de passe
+    password_minimum_length: Utilisez au moins 12 caractères.
     password_confirmation: Confirmation du mot de passe
     try_again_later: Veuillez réessayer plus tard.
     invalid_credentials: Adresse e-mail ou mot de passe incorrect.
@@ -117,6 +118,9 @@ fr:
       subscribed: Vous êtes maintenant abonné.
       unsubscribed: Désabonnement effectué.
       invalid_unsubscribe_link: Ce lien de désabonnement est invalide ou a expiré.
+      unsubscribe_title: Se désabonner des alertes de disponibilité
+      unsubscribe_confirmation: Confirmez que vous ne souhaitez plus recevoir d’e-mails lorsque ce produit sera disponible.
+      unsubscribe: Se désabonner
     reviews:
       title: Avis
       new: Ajouter un avis
@@ -197,3 +201,6 @@ fr:
       default: "%d/%m/%Y %H:%M"
       short: "%d %b, %H:%M"
       long: "%d %B %Y à %H:%M"
+  errors:
+    messages:
+      too_short: "est trop court (minimum de %{count} caractères)"

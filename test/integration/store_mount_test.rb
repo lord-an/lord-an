@@ -26,10 +26,24 @@ class StoreMountTest < ActionDispatch::IntegrationTest
     get "/authenticate/registrations/new"
     assert_response :success
     assert_select "h1", "Sign up"
+    assert_select "input[name='user[password]'][minlength='12']"
 
     get "/authenticate/session/new"
     assert_response :success
     assert_select "h1", "Log in"
+  end
+
+  test "signup rejects passwords shorter than twelve characters" do
+    post "/authenticate/registrations", params: {
+      user: {
+        email_address: "short-password@example.org",
+        password: "too-short",
+        password_confirmation: "too-short"
+      }
+    }
+
+    assert_response :unprocessable_entity
+    assert_not User.exists?(email_address: "short-password@example.org")
   end
 
   test "a visitor can sign up, view settings, and update account settings" do
@@ -50,6 +64,10 @@ class StoreMountTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "p", /engine-user@example\.org/
 
+    get "/portal/settings/edit"
+    assert_response :success
+    assert_select "input[name='user[password]'][minlength='12']"
+
     patch "/portal/settings", params: {
       user: {
         email_address: "updated-user@example.org",
@@ -62,6 +80,18 @@ class StoreMountTest < ActionDispatch::IntegrationTest
     assert_redirected_to "/portal/settings"
     user = User.find_by!(email_address: "updated-user@example.org")
     assert user.authenticate("a new private password")
+
+    patch "/portal/settings", params: {
+      user: {
+        email_address: "updated-user@example.org",
+        current_password: "a new private password",
+        password: "too-short",
+        password_confirmation: "too-short"
+      }
+    }
+
+    assert_response :unprocessable_entity
+    assert user.reload.authenticate("a new private password")
   end
 
   test "portal settings requires authentication" do

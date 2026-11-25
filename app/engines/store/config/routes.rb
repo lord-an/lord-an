@@ -11,5 +11,5 @@ Store::Engine.routes.draw do
     resources :wishlist_products, only: [ :update, :destroy ], module: :wishlists
   end
 
-  resource :unsubscribe, only: [ :show ]
+  resource :unsubscribe, only: %i[ show destroy ]
 end

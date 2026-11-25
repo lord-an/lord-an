@@ -59,6 +59,7 @@ en:
     welcome: Welcome! Your account has been created.
     email: Email address
     password: Password
+    password_minimum_length: Use at least 12 characters.
     password_confirmation: Password confirmation
     try_again_later: Try again later.
     invalid_credentials: Try another email address or password.
@@ -117,6 +118,9 @@ en:
       subscribed: You are now subscribed.
       unsubscribed: Unsubscribed successfully.
       invalid_unsubscribe_link: This unsubscribe link is invalid or has expired.
+      unsubscribe_title: Unsubscribe from stock alerts
+      unsubscribe_confirmation: Confirm that you no longer want stock alert emails for this product.
+      unsubscribe: Unsubscribe
     reviews:
       title: Reviews
       new: Add a review
@@ -195,3 +199,6 @@ en:
       default: "%m/%d/%Y %H:%M"
       short: "%b %d, %H:%M"
       long: "%B %d, %Y %H:%M"
+  errors:
+    messages:
+      too_short: "is too short (minimum is %{count} characters)"

@@ -3,7 +3,8 @@
 <%= form_with url: "/authenticate/passwords/#{params[:token]}", method: :patch do |form| %>
   <div>
     <%= form.label :password, t("authenticate.password") %>
-    <%= form.password_field :password, required: true, autocomplete: "new-password" %>
+    <%= form.password_field :password, required: true, minlength: 12, autocomplete: "new-password" %>
+    <small><%= t "authenticate.password_minimum_length" %></small>
   </div>
 
   <div>
