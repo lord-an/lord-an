@@ -68,6 +68,31 @@ class LunaStyleTest < ActionDispatch::IntegrationTest
     get stylesheet["href"]
 
     assert_response :success
+    assert_includes response.body, 'body[data-luna-style-theme="sunrise"]'
     assert_includes response.body, "--store-color-accent"
+    assert_includes response.body, "--store-color-accent: var(--luna-color-accent)"
+  end
+
+  test "host and mounted engine layouts share LunaStyle" do
+    administrator = users(:one)
+    administrator.update!(admin: true)
+    sign_in_as administrator
+    LunaStyle::ThemeSetting.current.update!(theme: "forest")
+
+    [
+      "/",
+      "/authenticate/session/new",
+      "/portal/settings",
+      "/store",
+      "/commerce/cart",
+      "/internationalization/settings",
+      "/luna-style/theme"
+    ].each do |path|
+      get path
+
+      assert_response :success, path
+      assert_select 'body[data-luna-style-theme="forest"]', 1, path
+      assert_select 'link[rel="stylesheet"][href*="luna_style/application"]', 1, path
+    end
   end
 end

@@ -1,4 +1,39 @@
 fr:
+  home:
+    title: Lord An
+    description: Une boutique localisée construite autour d’une application hôte Rails et de moteurs montables qui collaborent.
+    engines_title: Fonctionnement de l’application
+    engines:
+      authenticate:
+        title: Authentification
+        description: Gère l’inscription, la connexion, la déconnexion et la récupération du mot de passe. Les utilisateurs et les sessions sont stockés dans l’application hôte.
+        link: Créer un compte ou se connecter
+        path: /authenticate/registrations/new
+      portal:
+        title: Portail
+        description: Fournit aux clients connectés des paramètres de compte à partir des modèles utilisateur et session partagés de l’application hôte.
+        link: Paramètres du compte
+        path: /portal
+      luna_style:
+        title: LunaStyle
+        description: Fournit des jetons de conception partagés et le choix du thème pour l’application hôte et tous les moteurs montables.
+        link: Administration des thèmes
+        path: /luna-style/theme
+      store:
+        title: Boutique
+        description: Gère le catalogue, les stocks, les avis, les listes de souhaits et les alertes de disponibilité. La gestion des produits est réservée aux administrateurs.
+        link: Parcourir la boutique
+        path: /store
+      commerce:
+        title: Commerce
+        description: Crée les paniers clients et des récapitulatifs de commandes impayées à partir des produits de la boutique. Le paiement et la réservation du stock ne sont pas implémentés.
+        link: Voir votre panier
+        path: /commerce/cart
+      internationalization:
+        title: Internationalisation
+        description: Partage les langues prises en charge et le choix de la langue entre l’application hôte et les moteurs montables.
+        link: Préférences linguistiques
+        path: /internationalization/settings
   internationalization:
     languages:
       en: Anglais

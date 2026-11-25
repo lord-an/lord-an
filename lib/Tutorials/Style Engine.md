@@ -1,8 +1,8 @@
 # A Skin for the Store: Build a Convention-Driven Style Engine
 
-Add a local, mountable Rails engine that owns storefront theme selection and
-design tokens, then integrate it with the existing Store engine using Rails
-conventions rather than a configurable theme framework.
+Add a local, mountable Rails engine that owns application-wide theme selection
+and design tokens, then apply it to the host application and every mounted
+engine using Rails conventions rather than a configurable theme framework.
 
 ## Table of Contents
 
@@ -66,10 +66,11 @@ By completing this tutorial, learners will be able to:
 - A new `LunaStyle` engine is mounted at `/luna-style`.
 - Administrators can view and change the active theme at
   `/luna-style/theme`.
-- The Store layout exposes the selected theme as a `data-storefront-theme`
-  attribute on `<body>`.
-- Storefront styles use shared CSS custom properties with `classic`, `forest`,
-  and `sunrise` palettes.
+- Every host and mounted-engine layout exposes the selected theme as a
+  `data-luna-style-theme` attribute on `<body>`. Store retains its
+  `data-storefront-theme` attribute for compatibility.
+- Shared styles use design tokens with `classic`, `forest`, and `sunrise`
+  palettes across the application.
 - The default is `classic`; the selected value persists in the host database.
 
 ## 2. Prerequisites and Baseline
@@ -395,134 +396,77 @@ requests; neither may update the setting.
 
 Do not provide public preview or arbitrary CSS input in this mini-project.
 
-## 7. Apply the Theme to the Storefront
+## 7. Apply the Theme Across the Application
 
-**Goal:** Connect the chosen theme to the existing Store layout using standard
-helper and asset lookup.
+**Goal:** Make the selected theme and shared design system available to the
+host application and every mounted engine.
 
-The style engine exposes the current theme through a helper. Create
-`app/engines/luna_style/app/helpers/luna_style/theme_helper.rb`:
+Expose `luna_style_theme` in the engine's `ThemeHelper`, then register it with
+all Rails controller views from the LunaStyle engine initializer:
 
 ```ruby
-module LunaStyle
-  module ThemeHelper
-    def storefront_theme
-      ThemeSetting.current.theme
-    end
+initializer "luna_style.action_controller_helpers" do
+  ActiveSupport.on_load(:action_controller_base) do
+    helper LunaStyle::ThemeHelper
   end
 end
 ```
 
-Include it in
-`app/engines/store/app/helpers/store/application_helper.rb`:
-
-```ruby
-module Store
-  module ApplicationHelper
-    include LunaStyle::ThemeHelper
-  end
-end
-```
-
-The stylesheet belongs to the engine under its conventional asset prefix.
-Create
-`app/engines/luna_style/app/assets/stylesheets/luna_style/application.css`:
+Keep `storefront_theme` as a compatibility wrapper if existing Store views use
+it. Define semantic CSS custom properties in the engine stylesheet and scope
+palette overrides to the shared body attribute:
 
 ```css
 :root {
-  --store-color-background: #f8fafc;
-  --store-color-surface: #ffffff;
-  --store-color-text: #0f172a;
-  --store-color-border: #cbd5e1;
-  --store-color-accent: #1d4ed8;
-  --store-color-on-accent: #ffffff;
+  --luna-color-background: #f8fafc;
+  --luna-color-surface: #ffffff;
+  --luna-color-text: #0f172a;
+  --luna-color-border: #cbd5e1;
+  --luna-color-accent: #1d4ed8;
+  --luna-color-on-accent: #ffffff;
 }
 
-body[data-storefront-theme="forest"] {
-  --store-color-background: #f0fdf4;
-  --store-color-surface: #ffffff;
-  --store-color-text: #14231a;
-  --store-color-border: #a7c4ae;
-  --store-color-accent: #14532d;
-  --store-color-on-accent: #ffffff;
+body[data-luna-style-theme="forest"] {
+  --luna-color-background: #f0fdf4;
+  --luna-color-accent: #14532d;
 }
 
-body[data-storefront-theme="sunrise"] {
-  --store-color-background: #fff7ed;
-  --store-color-surface: #ffffff;
-  --store-color-text: #431407;
-  --store-color-border: #fed7aa;
-  --store-color-accent: #9a3412;
-  --store-color-on-accent: #ffffff;
+body[data-luna-style-theme="sunrise"] {
+  --luna-color-background: #fff7ed;
+  --luna-color-accent: #9a3412;
 }
 ```
 
 `classic` is the root palette, so it remains the fallback if the theme is
-missing. The named colors above give the tutorial readable default pairings;
-check contrast when changing palette values. Do not rely on color alone to
-communicate state.
+missing. Check text/background contrast when changing palette values, and do
+not rely on color alone to communicate state.
 
-In
-`app/engines/store/app/views/layouts/store/application.html.erb`, include the
-engine stylesheet alongside the existing stylesheets and set the theme
-attribute on the body:
+Load `luna_style/application` in the host layout and each standalone engine
+layout: Authenticate, Portal, Store, Commerce, and LunaStyle. Keep it as a
+separate `stylesheet_link_tag` when the layout already loads `:app`; Rails
+expands that source and does not treat later strings as additional assets.
+Internationalization has no standalone layout, so set its controller to use
+the host `application` layout. Set `data-luna-style-theme` on each layout body.
+Store should also keep `data-storefront-theme` until callers no longer depend
+on it.
 
-```erb
-<%= stylesheet_link_tag "store/application",
-                        "luna_style/application",
-                        "actiontext",
-                        media: "all" %>
-```
+Use the shared `--luna-color-*` tokens in component styles. Existing Store CSS
+can keep its `--store-color-*` aliases while other engines adopt the global
+tokens. Do not add a separate asset manifest or custom asset-path
+configuration; verify Propshaft serves the engine-owned stylesheet.
 
-```erb
-<body data-storefront-theme="<%= storefront_theme %>">
-```
+Request the host root and pages in each mounted engine and confirm:
 
-Update the existing rules in
-`app/engines/store/app/assets/stylesheets/store/application.css` to use the
-shared tokens for page background and text, navigation surface and border, and
-link/button accents:
-
-```css
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 1rem;
-  background-color: var(--store-color-background);
-  color: var(--store-color-text);
-}
-
-nav {
-  /* Keep the existing layout declarations. */
-  background-color: var(--store-color-surface);
-  border-bottom: 1px solid var(--store-color-border);
-}
-
-nav a {
-  color: var(--store-color-accent);
-}
-
-nav button {
-  background-color: var(--store-color-accent);
-  color: var(--store-color-on-accent);
-}
-```
-
-Do not replace unrelated component colors or add an asset manifest solely for
-this stylesheet. Engine asset lookup is namespaced; verify it with a real
-request instead of adding custom asset-path configuration preemptively.
-
-Request `/store` and confirm:
-
-1. The body attribute is `classic` before the setting is changed.
-2. The page has a link to `luna_style/application`.
-3. Propshaft serves that stylesheet.
-4. After changing the setting as an administrator, a new storefront request
-   has the persisted theme in its body attribute.
-5. The served CSS contains the three palette definitions.
+1. Every response includes the shared stylesheet and the active theme body
+   attribute.
+2. The Store response also retains its compatibility body attribute.
+3. Propshaft serves the stylesheet with all three palette definitions.
+4. Changing the setting as an administrator updates the theme across
+   subsequent requests to every engine.
 
 ## 8. Test the Complete Feature
 
-**Goal:** Verify both the new engine and the existing Store experience.
+**Goal:** Verify the new engine, the Store experience, and every shared layout.
 
 Add `test/models/luna_style/theme_setting_test.rb`:
 
@@ -639,6 +583,29 @@ class LunaStyleTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_includes response.body, "--store-color-accent"
   end
+
+  test "host and mounted engine layouts share LunaStyle" do
+    administrator = users(:one)
+    administrator.update!(admin: true)
+    sign_in_as administrator
+    LunaStyle::ThemeSetting.current.update!(theme: "forest")
+
+    [
+      "/",
+      "/authenticate/session/new",
+      "/portal/settings",
+      "/store",
+      "/commerce/cart",
+      "/internationalization/settings",
+      "/luna-style/theme"
+    ].each do |path|
+      get path
+
+      assert_response :success, path
+      assert_select 'body[data-luna-style-theme="forest"]', 1, path
+      assert_select 'link[rel="stylesheet"][href*="luna_style/application"]', 1, path
+    end
+  end
 end
 ```
 
@@ -666,14 +633,14 @@ When the server is available, also check the browser flow:
 2. Visit `/store` and confirm the default theme.
 3. Sign in as an administrator, visit `/luna-style/theme`, choose another
    theme, and submit.
-4. Return to `/store` and confirm the chosen theme remains active after the
-   request.
+4. Visit the host root and pages in the mounted engines and confirm the chosen
+   theme remains active on each response.
 5. Sign in as a non-admin and confirm the settings endpoint cannot change the
    setting.
 
 Tests must cover both the new engine and the host integration boundary; a
 passing model test alone does not establish that the engine is mounted,
-authorized, or rendered by Store.
+authorized, or applied across the host and mounted-engine layouts.
 
 ## 9. What You Learned
 
@@ -705,10 +672,10 @@ authorized, or rendered by Store.
       and administrator access for both show and update.
 - [ ] Strong parameters permit only the theme field; invalid submissions do not
       persist.
-- [ ] The Store body reflects the active theme using
-      `data-storefront-theme`.
-- [ ] Propshaft serves the engine-owned stylesheet and the Store layout loads
-      it.
+- [ ] Every host and mounted-engine body reflects the active theme using
+      `data-luna-style-theme`; Store retains `data-storefront-theme`.
+- [ ] Propshaft serves the engine-owned stylesheet and every standalone HTML
+      layout loads it.
 - [ ] The stylesheet defines shared semantic tokens for all three palettes,
       with usable text/background contrast.
 - [ ] Focused model and integration tests plus the full host test suite pass.

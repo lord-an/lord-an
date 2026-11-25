@@ -18,7 +18,8 @@ bin/rails db:prepare
 bin/rails server
 ```
 
-The storefront is available at `/` and `/store`. Sign-up and login are under
+The application overview is available at `/`; the storefront is available at
+`/store`. Sign-up and login are under
 `/authenticate`; account settings are under `/portal`; customer carts and unpaid
 order records are under `/commerce`. Run the application test suite with:
 
@@ -48,6 +49,8 @@ can browse the catalog.
 - `Authenticate` owns sign-up, sessions, and password reset, using the host
   application's account and session models.
 - `Portal` owns signed-in account settings.
+- `LunaStyle` owns shared design tokens and theme selection across the host
+  application and all mounted engines.
 - `Store` owns catalog, inventory, product reviews, wishlists, and stock alerts.
 - `Commerce` owns customer carts and order snapshots, depending on Store through
   its product model.

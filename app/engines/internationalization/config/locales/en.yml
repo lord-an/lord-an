@@ -1,4 +1,39 @@
 en:
+  home:
+    title: Lord An
+    description: A localized storefront application built from a Rails host app and collaborating mountable engines.
+    engines_title: How the application works
+    engines:
+      authenticate:
+        title: Authentication
+        description: Handles account registration, sign-in, sign-out, and password recovery. User and session records live in the host application.
+        link: Create an account or sign in
+        path: /authenticate/registrations/new
+      portal:
+        title: Portal
+        description: Provides signed-in customers with account settings, using the shared host user and authentication session.
+        link: Account settings
+        path: /portal
+      luna_style:
+        title: LunaStyle
+        description: Provides shared design tokens and theme selection for the host application and every mounted engine.
+        link: Theme administration
+        path: /luna-style/theme
+      store:
+        title: Store
+        description: Owns the product catalog, inventory, reviews, wishlists, and stock notifications. Product management is restricted to administrators.
+        link: Browse the store
+        path: /store
+      commerce:
+        title: Commerce
+        description: Builds customer carts and unpaid order snapshots from Store products. Payment collection and inventory reservation are not implemented.
+        link: View your cart
+        path: /commerce/cart
+      internationalization:
+        title: Internationalization
+        description: Shares supported languages and locale selection across the host application and mounted engines.
+        link: Language settings
+        path: /internationalization/settings
   internationalization:
     languages:
       en: English

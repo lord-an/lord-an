@@ -9,15 +9,17 @@ active theme setting and CSS design tokens. The host app mounts it at
 
 The engine supports `classic`, `forest`, and `sunrise`. The `classic` theme is
 the default. The current theme is persisted in the host application's
-`luna_style_theme_settings` table and applied to the Store engine through the
-`data-storefront-theme` body attribute.
+`luna_style_theme_settings` table and applied across the host and mounted
+engines through the `data-luna-style-theme` body attribute. Store also retains
+its `data-storefront-theme` attribute for compatibility.
 
 ## Host application setup
 
 The host application's Gemfile includes this engine as a local path dependency.
-Store also declares LunaStyle as a dependency because its layout consumes the
-engine's helper and stylesheet. The host mounts the engine in
-`config/routes.rb`.
+Store declares LunaStyle as a dependency because it consumes the engine's
+theme helper and stylesheet. The host mounts the engine in `config/routes.rb`;
+the engine registers its helper for every Rails controller view, and each
+standalone HTML layout loads the shared stylesheet.
 
 Install the engine migration and migrate the host database:
 

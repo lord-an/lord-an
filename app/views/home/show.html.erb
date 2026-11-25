@@ -1,0 +1,17 @@
+<% content_for :title, t("home.title") %>
+
+<main>
+  <h1><%= t("home.title") %></h1>
+  <p><%= t("home.description") %></p>
+
+  <h2><%= t("home.engines_title") %></h2>
+  <dl>
+    <% %w[authenticate portal luna_style store commerce internationalization].each do |engine| %>
+      <dt><%= t("home.engines.#{engine}.title") %></dt>
+      <dd>
+        <%= t("home.engines.#{engine}.description") %>
+        <%= link_to t("home.engines.#{engine}.link"), t("home.engines.#{engine}.path") %>
+      </dd>
+    <% end %>
+  </dl>
+</main>

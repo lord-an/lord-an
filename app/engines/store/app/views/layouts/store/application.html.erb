@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Store</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
@@ -10,7 +11,7 @@
   <%= stylesheet_link_tag "store/application", "luna_style/application", "actiontext", media: "all" %>
   <%= javascript_importmap_tags %>
 </head>
-<body data-storefront-theme="<%= storefront_theme %>">
+<body data-luna-style-theme="<%= luna_style_theme %>" data-storefront-theme="<%= storefront_theme %>">
   <nav>
     <%= link_to t("store.navigation.home"), root_path %>
     <%= link_to t("internationalization.settings.title"), "/internationalization/settings" %>
