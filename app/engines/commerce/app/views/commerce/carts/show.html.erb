@@ -8,11 +8,13 @@
       <li>
         <%= item.product.localized_name %>
         <%= number_to_currency(item.product.price_cents / 100.0, unit: "#{item.product.currency_code} ") %>
-        <%= form_with model: item, url: cart_item_path(item), scope: :cart_item, method: :patch do |form| %>
-          <%= form.number_field :quantity, min: 1, max: item.product.inventory_count, required: true %>
-          <%= form.submit t("commerce.cart.update") %>
+        <% unless @cart.checkout_in_progress? %>
+          <%= form_with model: item, url: cart_item_path(item), scope: :cart_item, method: :patch do |form| %>
+            <%= form.number_field :quantity, min: 1, max: item.product.inventory_count, required: true %>
+            <%= form.submit t("commerce.cart.update") %>
+          <% end %>
+          <%= button_to t("commerce.cart.remove"), cart_item_path(item), method: :delete %>
         <% end %>
-        <%= button_to t("commerce.cart.remove"), cart_item_path(item), method: :delete %>
       </li>
     <% end %>
   </ul>
@@ -23,8 +25,31 @@
   <% else %>
     <p><%= t "commerce.cart.mixed_currencies" %></p>
   <% end %>
-  <p><%= t "commerce.cart.payment_unavailable" %></p>
-  <%= button_to t("commerce.cart.create_order"), checkout_cart_path, method: :post %>
+  <% if @cart.checkout_in_progress? %>
+    <p><%= t "commerce.cart.checkout_in_progress" %></p>
+    <% if @cart.checkout_order.adyen_checkout_url.present? %>
+      <p><%= link_to t("commerce.cart.resume_checkout"), @cart.checkout_order.adyen_checkout_url, target: "_blank", rel: "noopener" %></p>
+    <% end %>
+  <% else %>
+    <p><%= t "commerce.cart.shipping_rate" %></p>
+    <%= form_with url: checkout_cart_path, scope: :shipping_address do |form| %>
+      <%= form.label :name, t("commerce.cart.shipping_name") %>
+      <%= form.text_field :name, required: true, maxlength: 150 %>
+      <%= form.label :line1, t("commerce.cart.shipping_line1") %>
+      <%= form.text_field :line1, required: true, maxlength: 150 %>
+      <%= form.label :line2, t("commerce.cart.shipping_line2") %>
+      <%= form.text_field :line2, maxlength: 150 %>
+      <%= form.label :city, t("commerce.cart.shipping_city") %>
+      <%= form.text_field :city, required: true, maxlength: 100 %>
+      <%= form.label :region, t("commerce.cart.shipping_region") %>
+      <%= form.text_field :region, maxlength: 100 %>
+      <%= form.label :postal_code, t("commerce.cart.shipping_postal_code") %>
+      <%= form.text_field :postal_code, maxlength: 32 %>
+      <%= form.label :country_code, t("commerce.cart.shipping_country_code") %>
+      <%= form.text_field :country_code, required: true, minlength: 2, maxlength: 2, pattern: "[A-Z]{2}" %>
+      <%= form.submit t("commerce.cart.create_order") %>
+    <% end %>
+  <% end %>
 <% end %>
 
 <p><%= link_to t("store.navigation.home"), "/store" %></p>

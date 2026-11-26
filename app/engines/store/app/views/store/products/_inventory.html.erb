@@ -5,7 +5,7 @@
   <p><%= t "store.inventory.notify_when_available" %></p>
 
   <%= form_with model: [ product, Store::Subscriber.new ] do |form| %>
-    <%= form.email_field :email, placeholder: "you@example.com", required: true %>
+    <%= form.email_field :email, placeholder: "you@example.com", required: true, maxlength: 254 %>
     <%= form.submit t("store.inventory.notify_me") %>
   <% end %>
 <% end %>

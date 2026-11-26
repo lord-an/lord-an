@@ -1,10 +1,13 @@
 module Commerce
   class CartItemsController < ApplicationController
+    before_action :redirect_if_checkout_in_progress
+
     def create
       attributes = cart_item_params
       product = Store::Product.find(attributes[:product_id])
-      unless product.price_set?
-        redirect_to cart_path, alert: t("commerce.cart.price_unavailable")
+      unless product.price_set? && product.shippable? && product.tax_configured? && product.currency_code == "USD"
+        message = product.price_set? && product.currency_code != "USD" ? t("commerce.cart.usd_only") : t("commerce.cart.price_unavailable")
+        redirect_to cart_path, alert: message
         return
       end
 
@@ -40,6 +43,13 @@ module Commerce
     end
 
     private
+      def redirect_if_checkout_in_progress
+        cart = Cart.find_by(user: Current.user)
+        return unless cart&.checkout_in_progress?
+
+        redirect_to cart_path, alert: t("commerce.cart.checkout_in_progress")
+      end
+
       def cart_item_params
         params.expect(cart_item: [ :product_id, :quantity ])
       end

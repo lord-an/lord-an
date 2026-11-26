@@ -2,6 +2,14 @@
 
 <ul>
   <% @orders.each do |order| %>
-    <li><%= link_to "##{order.id}", order_path(order) %> — <%= t("commerce.orders.status.#{order.status}") %></li>
+    <li>
+      <%= link_to "##{order.id}", order_path(order) %>
+      — <%= t("commerce.orders.status.#{order.status}") %>
+      — <%= t("commerce.orders.fulfillment.#{order.fulfilled_at? ? 'fulfilled' : (order.status == 'paid' ? 'ready' : 'not_ready')}") %>
+      <% if Current.user.admin? %>
+        — <%= order.user.email_address %>
+      <% end %>
+      — <%= number_to_currency(order.total_cents / 100.0, unit: "#{order.currency_code} ") %>
+    </li>
   <% end %>
 </ul>

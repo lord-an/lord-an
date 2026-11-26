@@ -7,6 +7,9 @@ Store::Engine.routes.draw do
     resources :subscribers, only: [ :create ]
   end
 
+  get "subscribers/confirm/:token", to: "subscribers#confirm", as: :confirm_subscriber
+  post "subscribers/confirm/:token", to: "subscribers#activate", as: :activate_subscriber
+
   resources :wishlists do
     resources :wishlist_products, only: [ :update, :destroy ], module: :wishlists
   end

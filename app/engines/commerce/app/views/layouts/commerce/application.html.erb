@@ -12,6 +12,9 @@
   <body data-luna-style-theme="<%= luna_style_theme %>">
     <%= render "shared/site_header", section: :commerce %>
     <%= render "shared/flash_messages" %>
+    <% if Current.user&.admin? %>
+      <nav aria-label="<%= t('commerce.orders.title') %>"><%= link_to t("commerce.orders.title"), orders_path %></nav>
+    <% end %>
     <main class="page-container"><%= yield %></main>
   </body>
 </html>

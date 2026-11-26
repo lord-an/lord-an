@@ -66,6 +66,26 @@ Rails.application.configure do
     enable_starttls: true
   }
 
+  checkout_environment = {
+    "ADYEN_API_KEY" => ENV.fetch("ADYEN_API_KEY"),
+    "ADYEN_HMAC_KEY" => ENV.fetch("ADYEN_HMAC_KEY"),
+    "ADYEN_MERCHANT_ACCOUNT" => ENV.fetch("ADYEN_MERCHANT_ACCOUNT"),
+    "ADYEN_LIVE_PREFIX" => ENV.fetch("ADYEN_LIVE_PREFIX"),
+    "AVATAX_ACCOUNT_ID" => ENV.fetch("AVATAX_ACCOUNT_ID"),
+    "AVATAX_LICENSE_KEY" => ENV.fetch("AVATAX_LICENSE_KEY"),
+    "AVATAX_COMPANY_CODE" => ENV.fetch("AVATAX_COMPANY_CODE"),
+    "MERCHANT_ORIGIN_LINE1" => ENV.fetch("MERCHANT_ORIGIN_LINE1"),
+    "MERCHANT_ORIGIN_CITY" => ENV.fetch("MERCHANT_ORIGIN_CITY"),
+    "MERCHANT_ORIGIN_REGION" => ENV.fetch("MERCHANT_ORIGIN_REGION"),
+    "MERCHANT_ORIGIN_POSTAL_CODE" => ENV.fetch("MERCHANT_ORIGIN_POSTAL_CODE"),
+    "MERCHANT_ORIGIN_COUNTRY_CODE" => ENV.fetch("MERCHANT_ORIGIN_COUNTRY_CODE")
+  }
+  raise "Production checkout requires live Adyen and AvaTax environments" unless
+    ENV.fetch("ADYEN_ENVIRONMENT") == "live" && ENV.fetch("AVATAX_ENVIRONMENT") == "production"
+  raise "ADYEN_HMAC_KEY must be 64 hexadecimal characters" unless checkout_environment["ADYEN_HMAC_KEY"].match?(/\A[0-9a-f]{64}\z/i)
+  raise "ADYEN_LIVE_PREFIX must be a hostname prefix" unless checkout_environment["ADYEN_LIVE_PREFIX"].match?(/\A[a-z0-9-]+\z/i)
+  raise "MERCHANT_ORIGIN_COUNTRY_CODE must be an ISO alpha-2 code" unless checkout_environment["MERCHANT_ORIGIN_COUNTRY_CODE"].match?(/\A[A-Z]{2}\z/)
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true

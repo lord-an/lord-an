@@ -25,7 +25,7 @@
 
   <div>
     <%= form.label :images, t("store.reviews.images") %>
-    <%= form.file_field :images, multiple: true, accept: "image/*", capture: "environment" %>
+    <%= form.file_field :images, multiple: true, accept: "image/png,image/jpeg,image/webp", capture: "environment" %>
   </div>
 
   <%= form.submit t("store.reviews.submit") %>

@@ -9,8 +9,10 @@ module Store
     has_one_attached :featured_image
     has_rich_text :description
 
+    validates_with ImageAttachmentsValidator, attributes: [ :featured_image ], max_count: 1, max_size: 5.megabytes
     validates :name, presence: true
     validates :inventory_count, numericality: { greater_than_or_equal_to: 0 }
+    validates :shipping_weight_grams, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
     validates :price_cents, numericality: { only_integer: true, greater_than: 0 }
     validates :currency_code, presence: true, format: { with: /\A[A-Z]{3}\z/ }
 
@@ -18,6 +20,14 @@ module Store
 
     def price_set?
       price_cents.to_i.positive? && currency_code.to_s.match?(/\A[A-Z]{3}\z/)
+    end
+
+    def shippable?
+      shipping_weight_grams.to_i.positive?
+    end
+
+    def tax_configured?
+      avatax_tax_code.to_s.match?(/\A[A-Z0-9]{2,20}\z/)
     end
 
     def localized_name(locale = I18n.locale)

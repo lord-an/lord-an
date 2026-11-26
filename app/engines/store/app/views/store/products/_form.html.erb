@@ -33,12 +33,22 @@
 
   <div>
     <%= form.label :featured_image, t("store.products.featured_image"), style: "display: block" %>
-    <%= form.file_field :featured_image, accept: "image/*" %>
+    <%= form.file_field :featured_image, accept: "image/png,image/jpeg,image/webp" %>
   </div>
 
   <div>
     <%= form.label :inventory_count, t("store.products.inventory_count"), style: "display: block" %>
     <%= form.number_field :inventory_count %>
+  </div>
+
+  <div>
+    <%= form.label :shipping_weight_grams, t("store.products.shipping_weight_grams"), style: "display: block" %>
+    <%= form.number_field :shipping_weight_grams, min: 1 %>
+  </div>
+
+  <div>
+    <%= form.label :avatax_tax_code, t("store.products.avatax_tax_code"), style: "display: block" %>
+    <%= form.text_field :avatax_tax_code, maxlength: 20 %>
   </div>
 
   <div>

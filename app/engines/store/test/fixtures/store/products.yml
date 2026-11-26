@@ -3,6 +3,8 @@
 tshirt:
   name: T-Shirt
   inventory_count: 15
+  shipping_weight_grams: 500
+  avatax_tax_code: P0000000
   price_cents: 2500
   currency_code: USD
   wishlists_count: 1
@@ -10,6 +12,8 @@ tshirt:
 out_of_stock:
   name: Out of Stock Item
   inventory_count: 0
+  shipping_weight_grams: 500
+  avatax_tax_code: P0000000
   price_cents: 1200
   currency_code: USD
   wishlists_count: 1

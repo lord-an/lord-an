@@ -1,0 +1,5 @@
+<h1><%= t "store.subscribers.confirm_title" %></h1>
+
+<p><%= @product.localized_name %></p>
+<p><%= t "store.subscribers.confirm_instructions" %></p>
+<p><%= link_to t("store.subscribers.confirm"), confirm_subscriber_url(token: @subscriber.generate_token_for(:confirmation)) %></p>

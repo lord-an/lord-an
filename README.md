@@ -20,8 +20,8 @@ bin/rails server
 
 The application overview is available at `/`; the storefront is available at
 `/store`. Sign-up and login are under
-`/authenticate`; account settings are under `/portal`; customer carts and unpaid
-order records are under `/commerce`. Run the application test suite with:
+`/authenticate`; account settings are under `/portal`; customer carts and orders
+are under `/commerce`. Run the application test suite with:
 
 ```sh
 bin/rails test
@@ -60,29 +60,54 @@ administrator-management screen.
 - `Internationalization` owns locale selection and dictionaries shared by the
   host and mounted engines.
 
-The Commerce engine currently creates `pending_payment` orders only. It does
-not charge customers, reserve inventory, or calculate tax or shipping. Do not
-enable it as a live checkout until a payment provider, currency/region rules,
-and stock-reservation policy have been selected and implemented behind a
-provider adapter.
+Commerce uses Adyen Hosted Checkout and only marks an order paid after a valid,
+amount-matched Adyen `AUTHORISATION` webhook. Inventory is reserved when a
+checkout session is created and released after refusal or expiry. AvaTax
+calculates destination tax, and shipping is charged at USD 100.00 per kilogram
+using administrator-maintained product weights. Checkout currently accepts USD
+only; destination support depends on the configured Adyen merchant account and
+AvaTax coverage. Orders requiring payment or tax reconciliation are not
+fulfillable until their status is `paid`.
 
 ## Production readiness
 
 Before deploying, set `KAMAL_HOST`, `KAMAL_IMAGE`, `KAMAL_REGISTRY_SERVER`,
 `KAMAL_REGISTRY_USERNAME`, and `APP_HOST` in the deployment environment.
 `APP_HOST` must be the public DNS hostname used by the HTTPS proxy. Provide
-`RAILS_MASTER_KEY`, `KAMAL_REGISTRY_PASSWORD`, `SMTP_USERNAME`, and
-`SMTP_PASSWORD` through Kamal's secrets; set `SMTP_ADDRESS` and optionally
+`RAILS_MASTER_KEY`, `KAMAL_REGISTRY_PASSWORD`, `SMTP_USERNAME`,
+`SMTP_PASSWORD`, `ADYEN_API_KEY`, `ADYEN_HMAC_KEY`, `AVATAX_ACCOUNT_ID`, and
+`AVATAX_LICENSE_KEY` through Kamal's secrets. Set `SMTP_ADDRESS` and optionally
 `SMTP_PORT`, `SMTP_DOMAIN`, and `SMTP_AUTHENTICATION` in the deployment
-environment. Production fails to boot when required application or SMTP
-settings are missing. No production host or mail provider has been selected
-for this repository, so these values remain operator-supplied.
+environment. Also configure `ADYEN_ENVIRONMENT=live`, `ADYEN_MERCHANT_ACCOUNT`,
+`ADYEN_LIVE_PREFIX`, `AVATAX_ENVIRONMENT=production`, `AVATAX_COMPANY_CODE`,
+and the `MERCHANT_ORIGIN_*` address values. Production refuses to boot unless
+these provider credentials and merchant-origin fields are present and valid;
+never use production credentials in local development or tests. Configure the
+Adyen Standard webhook to `https://APP_HOST/commerce/webhooks/adyen` and enable
+HMAC signing with the configured key.
 
-Production uses Kamal's TLS proxy, forces HTTPS, and sends mail through SMTP
-with STARTTLS. Production currently stores the SQLite database and Active
-Storage uploads on the local persistent volume; backups and restores must
-include both. This single-host setup should be revisited before horizontal
-scaling or availability guarantees.
+Production uses Kamal's TLS proxy, forces HTTPS, sends mail through SMTP with
+STARTTLS, and runs Solid Queue with Puma. Product weights must be populated
+before items are purchasable; products without a positive weight or a valid
+AvaTax product tax code are rejected at checkout. The shipping amount is weight
+in grams × 10 cents, which is exactly USD 100.00/kg; AvaTax receives a separate
+freight line. Assign the correct tax code to each product and review merchant
+nexus/settings with Avalara before accepting sales. Provider coverage and
+merchant-account country restrictions can limit destinations even though the
+checkout accepts ISO country codes.
+
+Production stores SQLite databases and Active Storage uploads on a local
+persistent volume. Backups must be coordinated and include the primary database
+and uploads; rehearse a restore before launch. The repository has no production
+host, provider credentials, or deploy environment, so live payment, tax, email,
+webhook delivery, and backup restoration have not been exercised here. Complete
+a sandbox purchase/refusal/expiry cycle and an operator-controlled restore
+rehearsal before switching the configured providers to live credentials.
+
+Administrators can review orders and shipping addresses under `/commerce/orders`
+and mark a paid order fulfilled after arranging shipment. Carrier labels,
+tracking notifications, refunds, and fulfillment automation are not integrated;
+those steps remain manual and require an operator procedure.
 
 The migration `20261125181000_migrate_legacy_store_users_to_host_users` copies
 legacy Store accounts without a host account, preserving their password
@@ -94,9 +119,8 @@ verified.
 ## Near-term roadmap
 
 1. Establish a secure operator/admin provisioning and recovery process.
-2. Select currency/region rules, payment and fulfillment providers, then
-   complete provider callbacks, stock reservation, tax, shipping, and order
-   cancellation in the Commerce engine.
+2. Verify the Adyen/AvaTax integrations with merchant sandbox accounts and
+   complete the country-specific tax, product tax-code, and shipping review.
 3. Configure and verify production email, background-job retries, and
    unsubscribe handling.
 4. Validate deployment, HTTPS, database/upload backups, and restoration.

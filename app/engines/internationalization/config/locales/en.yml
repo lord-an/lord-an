@@ -120,6 +120,8 @@ en:
       currency: Three-letter currency code
       featured_image: Featured image
       inventory_count: Inventory count
+      shipping_weight_grams: Shipping weight (grams)
+      avatax_tax_code: AvaTax product tax code
       translations: Product translations
       save: Save product
       created: Product created.
@@ -132,7 +134,12 @@ en:
       notify_when_available: Email me when available.
       notify_me: Notify me
     subscribers:
-      subscribed: You are now subscribed.
+      confirmation_sent: Check your email for a link to confirm your stock alert.
+      confirm_title: Confirm your stock alert subscription
+      confirm_instructions: Select the button below to confirm that you want stock alert emails for this product.
+      confirm: Confirm subscription
+      confirmed: Your stock alert subscription is confirmed.
+      invalid_confirmation_link: This confirmation link is invalid or has expired.
       unsubscribed: Unsubscribed successfully.
       invalid_unsubscribe_link: This unsubscribe link is invalid or has expired.
       unsubscribe_title: Unsubscribe from stock alerts
@@ -187,25 +194,49 @@ en:
       update: Update
       remove: Remove
       subtotal: Subtotal
-      create_order: Create unpaid order
-      payment_unavailable: Payment is not available yet. Creating an order does not charge you or reserve stock.
+      create_order: Continue to secure payment
       empty: Your cart is empty.
       invalid_quantity: Enter a valid quantity.
       exceeds_inventory: is greater than the available inventory.
       stock_changed: Inventory changed. Review your cart before continuing.
       mixed_currencies: Items in one order must use the same currency.
       price_unavailable: This product is not available for purchase yet.
+      shipping_weight_unavailable: This product is not available for shipping yet.
+      tax_code_unavailable: This product is not available for checkout until its tax code is configured.
+      usd_only: Checkout currently accepts USD only.
+      invalid_shipping_address: Enter a valid shipping name, address, city, and two-letter country code.
+      checkout_unavailable: Checkout is temporarily unavailable. Your cart has been preserved; please try again.
+      checkout_in_progress: Payment is being processed for this cart.
+      resume_checkout: Resume secure checkout
+      shipping_rate: Shipping is charged at USD 100.00 per kilogram; destination tax is calculated at checkout.
+      shipping_name: Recipient name
+      shipping_line1: Address line 1
+      shipping_line2: Address line 2
+      shipping_city: City
+      shipping_region: State / province / region
+      shipping_postal_code: Postal code
+      shipping_country_code: Country code (ISO 3166-1 alpha-2)
     orders:
       title: Your orders
       number: "Order #%{id}"
       status_label: Status
       total: Total
-      pending_payment: Order created. Payment has not been collected.
-      payment_unavailable: This order is awaiting payment integration. No payment has been taken and inventory has not been reserved.
+      returned_from_payment: Payment status is being confirmed.
+      shipping: Shipping
+      shipping_address: Shipping address
+      customer: Customer
+      marked_fulfilled: Order marked fulfilled.
+      fulfillment:
+        ready: Ready for fulfillment
+        not_ready: Not ready for fulfillment
+        fulfilled: Fulfilled
+      tax: Tax
       status:
-        pending_payment: Awaiting payment
+        pending_payment: Awaiting payment confirmation
+        processing_payment: Payment confirmed; tax recording is in progress
         paid: Paid
         cancelled: Cancelled
+        payment_review: Payment requires manual review
   date:
     formats:
       default: "%m/%d/%Y"

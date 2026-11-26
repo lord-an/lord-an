@@ -1,0 +1,6 @@
+<%= t "store.subscribers.confirm_title" %>
+
+<%= @product.localized_name %>
+<%= t "store.subscribers.confirm_instructions" %>
+
+<%= confirm_subscriber_url(token: @subscriber.generate_token_for(:confirmation)) %>

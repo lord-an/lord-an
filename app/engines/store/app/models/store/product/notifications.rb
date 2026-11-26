@@ -13,7 +13,7 @@ module Store
       end
 
       def notify_subscribers
-        subscribers.each do |subscriber|
+        subscribers.confirmed.find_each do |subscriber|
           ProductMailer.with(product: self, subscriber: subscriber).in_stock.deliver_later
         end
       end

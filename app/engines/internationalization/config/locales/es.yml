@@ -120,6 +120,8 @@ es:
       currency: Código de moneda de tres letras
       featured_image: Imagen principal
       inventory_count: Cantidad disponible
+      shipping_weight_grams: Peso de envío (gramos)
+      avatax_tax_code: Código fiscal del producto en AvaTax
       translations: Traducciones del producto
       save: Guardar producto
       created: Producto creado.
@@ -132,7 +134,12 @@ es:
       notify_when_available: Avíseme cuando esté disponible.
       notify_me: Avisarme
     subscribers:
-      subscribed: Se ha suscrito correctamente.
+      confirmation_sent: Revise su correo electrónico para confirmar la alerta de disponibilidad.
+      confirm_title: Confirme su suscripción a la alerta de disponibilidad
+      confirm_instructions: Seleccione el botón para confirmar que desea recibir alertas de disponibilidad de este producto.
+      confirm: Confirmar suscripción
+      confirmed: Su suscripción a la alerta de disponibilidad está confirmada.
+      invalid_confirmation_link: Este enlace de confirmación no es válido o ha caducado.
       unsubscribed: Se ha cancelado la suscripción.
       invalid_unsubscribe_link: El enlace para cancelar la suscripción no es válido o ha caducado.
       unsubscribe_title: Cancelar alertas de disponibilidad
@@ -187,25 +194,49 @@ es:
       update: Actualizar
       remove: Eliminar
       subtotal: Subtotal
-      create_order: Crear pedido sin pagar
-      payment_unavailable: El pago aún no está disponible. Crear un pedido no genera cargos ni reserva existencias.
+      create_order: Continuar al pago seguro
       empty: El carrito está vacío.
       invalid_quantity: Introduzca una cantidad válida.
       exceeds_inventory: supera las existencias disponibles.
       stock_changed: Las existencias han cambiado. Revise el carrito antes de continuar.
       mixed_currencies: Los artículos de un pedido deben usar la misma moneda.
       price_unavailable: Este producto aún no está disponible para su compra.
+      shipping_weight_unavailable: Este producto aún no está disponible para envío.
+      tax_code_unavailable: Este producto no está disponible hasta que se configure su código fiscal.
+      usd_only: Actualmente solo se aceptan pagos en USD.
+      invalid_shipping_address: Introduzca el nombre, la dirección, la ciudad y el código de país de dos letras.
+      checkout_unavailable: El pago no está disponible temporalmente. El carrito se conservó; inténtelo de nuevo.
+      checkout_in_progress: Se está procesando el pago de este carrito.
+      resume_checkout: Reanudar el pago seguro
+      shipping_rate: El envío cuesta USD 100,00 por kilogramo; el impuesto se calcula según el destino.
+      shipping_name: Nombre del destinatario
+      shipping_line1: Dirección, línea 1
+      shipping_line2: Dirección, línea 2
+      shipping_city: Ciudad
+      shipping_region: Estado / provincia / región
+      shipping_postal_code: Código postal
+      shipping_country_code: Código de país (ISO 3166-1 alfa-2)
     orders:
       title: Tus pedidos
       number: "Pedido n.º %{id}"
       status_label: Estado
       total: Total
-      pending_payment: Pedido creado. No se ha cobrado ningún pago.
-      payment_unavailable: Este pedido está pendiente de integrar el pago. No se ha cobrado ni reservado existencias.
+      returned_from_payment: Se está confirmando el estado del pago.
+      shipping: Envío
+      shipping_address: Dirección de envío
+      customer: Cliente
+      marked_fulfilled: Pedido marcado como preparado.
+      fulfillment:
+        ready: Listo para preparar
+        not_ready: Aún no se puede preparar
+        fulfilled: Preparado
+      tax: Impuestos
       status:
-        pending_payment: Pendiente de pago
+        pending_payment: Esperando confirmación del pago
+        processing_payment: Pago confirmado; se están registrando los impuestos
         paid: Pagado
         cancelled: Cancelado
+        payment_review: El pago requiere revisión manual
   date:
     formats:
       default: "%d/%m/%Y"

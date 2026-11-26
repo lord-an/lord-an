@@ -11,11 +11,20 @@
       <% else %>
         <p><%= t "commerce.cart.price_unavailable" %></p>
       <% end %>
+      <% unless @product.shippable? %>
+        <p><%= t "commerce.cart.shipping_weight_unavailable" %></p>
+      <% end %>
+      <% unless @product.tax_configured? %>
+        <p><%= t "commerce.cart.tax_code_unavailable" %></p>
+      <% end %>
+      <% if @product.price_set? && @product.currency_code != "USD" %>
+        <p><%= t "commerce.cart.usd_only" %></p>
+      <% end %>
       <%= @product.localized_description %>
     <% end %>
 
     <%= render "inventory", product: @product %>
-    <% if authenticated? && @product.inventory_count.positive? && @product.price_set? %>
+    <% if authenticated? && @product.inventory_count.positive? && @product.price_set? && @product.currency_code == "USD" && @product.shippable? && @product.tax_configured? %>
       <%= form_with url: "/commerce/cart/items", scope: :cart_item do |form| %>
         <%= form.hidden_field :product_id, value: @product.id %>
         <%= form.number_field :quantity, value: 1, min: 1, max: @product.inventory_count, required: true %>

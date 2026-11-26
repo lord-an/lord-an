@@ -10,5 +10,23 @@
   <% end %>
 </ul>
 
+<p><%= t("commerce.orders.shipping") %>: <%= number_to_currency(@order.shipping_cents / 100.0, unit: "#{@order.currency_code} ") %></p>
+<p><%= t("commerce.orders.tax") %>: <%= number_to_currency(@order.tax_cents / 100.0, unit: "#{@order.currency_code} ") %></p>
 <p><%= t("commerce.orders.total") %>: <%= number_to_currency(@order.total_cents / 100.0, unit: "#{@order.currency_code} ") %></p>
-<p><%= t "commerce.orders.payment_unavailable" %></p>
+
+<h2><%= t "commerce.orders.shipping_address" %></h2>
+<p><%= @order.shipping_name %></p>
+<p><%= @order.shipping_line1 %></p>
+<% if @order.shipping_line2.present? %>
+  <p><%= @order.shipping_line2 %></p>
+<% end %>
+<p><%= [ @order.shipping_city, @order.shipping_region, @order.shipping_postal_code, @order.shipping_country_code ].compact_blank.join(", ") %></p>
+
+<% if Current.user.admin? %>
+  <p><%= t("commerce.orders.customer") %>: <%= @order.user.email_address %></p>
+  <% if @order.fulfillable? %>
+    <%= button_to t("commerce.orders.mark_fulfilled"), mark_fulfilled_order_path(@order) %>
+  <% elsif @order.fulfilled_at? %>
+    <p><%= t("commerce.orders.fulfillment.fulfilled") %></p>
+  <% end %>
+<% end %>

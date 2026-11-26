@@ -120,6 +120,8 @@ fr:
       currency: Code de devise à trois lettres
       featured_image: Image principale
       inventory_count: Quantité en stock
+      shipping_weight_grams: Poids d’expédition (grammes)
+      avatax_tax_code: Code fiscal du produit AvaTax
       translations: Traductions du produit
       save: Enregistrer le produit
       created: Produit créé.
@@ -132,7 +134,12 @@ fr:
       notify_when_available: Prévenez-moi lorsque le produit sera disponible.
       notify_me: Me prévenir
     subscribers:
-      subscribed: Vous êtes maintenant abonné.
+      confirmation_sent: Consultez votre messagerie pour confirmer l’alerte de disponibilité.
+      confirm_title: Confirmez votre inscription à l’alerte de disponibilité
+      confirm_instructions: Sélectionnez le bouton ci-dessous pour confirmer les alertes de disponibilité pour ce produit.
+      confirm: Confirmer l’inscription
+      confirmed: Votre inscription à l’alerte de disponibilité est confirmée.
+      invalid_confirmation_link: Ce lien de confirmation est invalide ou a expiré.
       unsubscribed: Désabonnement effectué.
       invalid_unsubscribe_link: Ce lien de désabonnement est invalide ou a expiré.
       unsubscribe_title: Se désabonner des alertes de disponibilité
@@ -187,25 +194,49 @@ fr:
       update: Mettre à jour
       remove: Retirer
       subtotal: Sous-total
-      create_order: Créer une commande non payée
-      payment_unavailable: Le paiement n’est pas encore disponible. La création d’une commande ne vous facture pas et ne réserve pas de stock.
+      create_order: Continuer vers le paiement sécurisé
       empty: Votre panier est vide.
       invalid_quantity: Saisissez une quantité valide.
       exceeds_inventory: dépasse le stock disponible.
       stock_changed: Le stock a changé. Vérifiez votre panier.
       mixed_currencies: Tous les articles d’une commande doivent utiliser la même devise.
       price_unavailable: Ce produit n’est pas encore disponible à l’achat.
+      shipping_weight_unavailable: Ce produit n’est pas encore disponible pour l’expédition.
+      tax_code_unavailable: Ce produit ne peut pas être acheté tant que son code fiscal n’est pas configuré.
+      usd_only: Le paiement est actuellement disponible en USD uniquement.
+      invalid_shipping_address: Saisissez un nom, une adresse, une ville et un code pays à deux lettres valides.
+      checkout_unavailable: Le paiement est temporairement indisponible. Votre panier a été conservé ; réessayez.
+      checkout_in_progress: Le paiement de ce panier est en cours de traitement.
+      resume_checkout: Reprendre le paiement sécurisé
+      shipping_rate: La livraison coûte 100,00 USD par kilogramme ; la taxe est calculée selon la destination.
+      shipping_name: Nom du destinataire
+      shipping_line1: Adresse, ligne 1
+      shipping_line2: Adresse, ligne 2
+      shipping_city: Ville
+      shipping_region: État / province / région
+      shipping_postal_code: Code postal
+      shipping_country_code: Code pays (ISO 3166-1 alpha-2)
     orders:
       title: Vos commandes
       number: "Commande n° %{id}"
       status_label: Statut
       total: Total
-      pending_payment: Commande créée. Aucun paiement n’a été effectué.
-      payment_unavailable: Cette commande attend l’intégration du paiement. Aucun paiement n’a été effectué et le stock n’a pas été réservé.
+      returned_from_payment: Le statut du paiement est en cours de confirmation.
+      shipping: Livraison
+      shipping_address: Adresse de livraison
+      customer: Client
+      marked_fulfilled: Commande marquée comme expédiée.
+      fulfillment:
+        ready: Prête à être expédiée
+        not_ready: Pas encore prête à être expédiée
+        fulfilled: Expédiée
+      tax: Taxe
       status:
-        pending_payment: En attente de paiement
+        pending_payment: En attente de confirmation du paiement
+        processing_payment: Paiement confirmé ; enregistrement de la taxe en cours
         paid: Payée
         cancelled: Annulée
+        payment_review: Le paiement nécessite une vérification manuelle
   date:
     formats:
       default: "%d/%m/%Y"

@@ -38,12 +38,26 @@ env:
     - RAILS_MASTER_KEY
     - SMTP_USERNAME
     - SMTP_PASSWORD
+    - ADYEN_API_KEY
+    - ADYEN_HMAC_KEY
+    - AVATAX_ACCOUNT_ID
+    - AVATAX_LICENSE_KEY
   clear:
     APP_HOST: <%= ENV.fetch("APP_HOST") %>
     SMTP_ADDRESS: <%= ENV.fetch("SMTP_ADDRESS") %>
     SMTP_PORT: <%= ENV.fetch("SMTP_PORT", "587") %>
     SMTP_DOMAIN: <%= ENV.fetch("SMTP_DOMAIN", ENV.fetch("APP_HOST")) %>
     SMTP_AUTHENTICATION: <%= ENV.fetch("SMTP_AUTHENTICATION", "plain") %>
+    ADYEN_ENVIRONMENT: <%= ENV.fetch("ADYEN_ENVIRONMENT") %>
+    ADYEN_MERCHANT_ACCOUNT: <%= ENV.fetch("ADYEN_MERCHANT_ACCOUNT") %>
+    ADYEN_LIVE_PREFIX: <%= ENV.fetch("ADYEN_LIVE_PREFIX") %>
+    AVATAX_ENVIRONMENT: <%= ENV.fetch("AVATAX_ENVIRONMENT") %>
+    AVATAX_COMPANY_CODE: <%= ENV.fetch("AVATAX_COMPANY_CODE") %>
+    MERCHANT_ORIGIN_LINE1: <%= ENV.fetch("MERCHANT_ORIGIN_LINE1") %>
+    MERCHANT_ORIGIN_CITY: <%= ENV.fetch("MERCHANT_ORIGIN_CITY") %>
+    MERCHANT_ORIGIN_REGION: <%= ENV.fetch("MERCHANT_ORIGIN_REGION") %>
+    MERCHANT_ORIGIN_POSTAL_CODE: <%= ENV.fetch("MERCHANT_ORIGIN_POSTAL_CODE") %>
+    MERCHANT_ORIGIN_COUNTRY_CODE: <%= ENV.fetch("MERCHANT_ORIGIN_COUNTRY_CODE") %>
     # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
     # When you start using multiple servers, you should split out job processing to a dedicated machine.
     SOLID_QUEUE_IN_PUMA: true

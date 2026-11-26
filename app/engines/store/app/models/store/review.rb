@@ -4,6 +4,7 @@ module Store
     belongs_to :user, class_name: "::User"
     has_many_attached :images
 
+    validates_with ImageAttachmentsValidator, attributes: [ :images ], max_count: 5, max_size: 5.megabytes
     scope :rated, ->(rating) { rating.present? ? where(rating: rating.to_i) : all }
 
     validates :body, presence: true
