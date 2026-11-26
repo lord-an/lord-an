@@ -1,16 +1,72 @@
-<h1><%= t ".title" %></h1>
-
-<%= link_to t("store.products.new"), new_product_path if Current.user&.admin? %>
-
-<div id="products">
-  <% @products.each do |product| %>
-    <div>
-      <%= link_to product.localized_name, product_path(product) %>
-      <% if product.price_set? %>
-        <p><%= number_to_currency(product.price_cents / 100.0, unit: product.currency_code + " ") %></p>
-      <% else %>
-        <p><%= t "commerce.cart.price_unavailable" %></p>
+<section class="products-page" aria-labelledby="products-title">
+  <header class="page-heading products-heading">
+    <p class="eyebrow"><%= t "store.products.eyebrow" %></p>
+    <div class="products-heading__row">
+      <div>
+        <h1 id="products-title"><%= t ".title" %></h1>
+        <p><%= t "store.products.introduction" %></p>
+      </div>
+      <% if Current.user&.admin? %>
+        <%= link_to t("store.products.new"), new_product_path, class: "button-link products-heading__action" %>
       <% end %>
     </div>
+  </header>
+
+  <%= form_with url: "/store", method: :get, class: "products-toolbar" do |form| %>
+    <div class="products-toolbar__search">
+      <%= form.label :q, t("store.products.search") %>
+      <%= form.search_field :q, value: @query, placeholder: t("store.products.search_placeholder"), autocomplete: "off" %>
+    </div>
+    <div class="products-toolbar__sort">
+      <%= form.label :sort, t("store.products.sort") %>
+      <%= form.select :sort, [
+        [ t("store.products.sort_newest"), "newest" ],
+        [ t("store.products.sort_price_asc"), "price_asc" ],
+        [ t("store.products.sort_price_desc"), "price_desc" ]
+      ], selected: @sort %>
+    </div>
+    <%= form.submit t("store.products.apply_filters"), class: "button-link" %>
   <% end %>
-</div>
+
+  <% if @products.any? %>
+    <div class="products-grid" id="products">
+      <% @products.each do |product| %>
+        <article class="product-card">
+          <%= link_to product_path(product), class: "product-card__media-link", aria: { label: t("store.products.view_product_named", name: product.localized_name) } do %>
+            <% if product.featured_image.attached? %>
+              <%= image_tag product.featured_image, class: "product-card__image", alt: product.localized_name, loading: "lazy" %>
+            <% else %>
+              <span class="product-image-placeholder" aria-hidden="true"><span>LA</span></span>
+            <% end %>
+          <% end %>
+          <div class="product-card__content">
+            <h2><%= link_to product.localized_name, product_path(product) %></h2>
+            <% if product.price_set? %>
+              <p class="product-card__price"><%= number_to_currency(product.price_cents / 100.0, unit: product.currency_code + " ") %></p>
+            <% else %>
+              <p class="product-card__price product-card__price--unavailable"><%= t "commerce.cart.price_unavailable" %></p>
+            <% end %>
+            <%= link_to t("store.products.view_product"), product_path(product), class: "product-card__action" %>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <section class="products-empty content-card" aria-labelledby="products-empty-title">
+      <span class="products-empty__mark" aria-hidden="true">✳</span>
+      <% if @query.present? %>
+        <h2 id="products-empty-title"><%= t "store.products.no_results_title" %></h2>
+        <p><%= t "store.products.no_results_description", query: @query %></p>
+        <%= link_to t("store.products.clear_search"), "/store", class: "button-link" %>
+      <% else %>
+        <h2 id="products-empty-title"><%= t "store.products.empty_title" %></h2>
+        <p><%= t "store.products.empty_description" %></p>
+        <% if Current.user&.admin? %>
+          <%= link_to t("store.products.new"), new_product_path, class: "button-link" %>
+        <% else %>
+          <%= link_to t("store.products.return_home"), "/", class: "button-link" %>
+        <% end %>
+      <% end %>
+    </section>
+  <% end %>
+</section>

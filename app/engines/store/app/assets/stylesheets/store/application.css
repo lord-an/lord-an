@@ -35,6 +35,26 @@ section.product img {
   max-width: 50%;
 }
 
+@media (max-width: 48rem) {
+  section.product {
+    flex-direction: column;
+  }
+
+  section.product img {
+    width: 100%;
+    max-width: 100%;
+    max-height: 34rem;
+    flex-basis: auto;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  section.reviews {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

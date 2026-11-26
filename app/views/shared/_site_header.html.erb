@@ -2,10 +2,9 @@
   <div class="site-header__inner">
     <%= link_to "Lord An", "/", class: "site-brand", aria: { label: t("site.navigation.home") } %>
     <nav class="site-nav" aria-label="<%= t 'site.navigation.primary' %>">
+      <%= link_to t("site.navigation.home_link"), "/", aria: { current: request.path == "/" ? "page" : nil } %>
       <%= link_to t("site.navigation.store"), "/store", aria: { current: request.path.start_with?("/store") ? "page" : nil } %>
-      <% if Current.user %>
-        <%= link_to t("site.navigation.cart"), "/commerce/cart", aria: { current: request.path.start_with?("/commerce") ? "page" : nil } %>
-      <% end %>
+      <%= link_to t("site.navigation.cart"), "/commerce/cart", aria: { current: request.path.start_with?("/commerce") ? "page" : nil } %>
       <%= link_to t("site.navigation.settings"), "/settings", aria: { current: request.path.start_with?("/settings", "/portal/settings", "/internationalization/settings", "/luna-style/theme") ? "page" : nil } %>
     </nav>
     <% unless local_assigns[:section].to_s == "account" %>

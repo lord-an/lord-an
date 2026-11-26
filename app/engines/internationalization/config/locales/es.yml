@@ -96,9 +96,10 @@ es:
   site:
     navigation:
       home: Inicio de Lord An
+      home_link: Inicio
       primary: Navegación principal
       section: Navegación de sección
-      store: Tienda
+      store: Productos
       cart: Carrito
       settings: Configuración
   store:
@@ -110,6 +111,23 @@ es:
       wishlists: Listas de deseos
     products:
       title: Productos
+      eyebrow: Una colección cuidada
+      introduction: Descubre los detalles, compara tus opciones y elige lo que más te guste.
+      search: Buscar productos por nombre
+      search_placeholder: Prueba con un nombre de producto
+      sort: Ordenar por
+      sort_newest: Más recientes
+      sort_price_asc: "Precio: de menor a mayor"
+      sort_price_desc: "Precio: de mayor a menor"
+      apply_filters: Actualizar resultados
+      view_product: Ver producto
+      view_product_named: Ver %{name}
+      empty_title: Un espacio para lo que viene
+      empty_description: Todavía no hay productos en el catálogo. Vuelve pronto.
+      no_results_title: No se encontraron productos
+      no_results_description: No encontramos resultados para “%{query}”. Prueba otra búsqueda o borra esta.
+      clear_search: Borrar búsqueda
+      return_home: Volver al inicio
       new: Nuevo producto
       edit: Editar
       delete: Eliminar
@@ -187,6 +205,14 @@ es:
   commerce:
     cart:
       title: Carrito
+      eyebrow: Tus favoritos
+      description: Revisa tus artículos y los datos de entrega antes de continuar al pago seguro.
+      items_heading: Tus artículos
+      summary: Resumen del pedido
+      empty_description: Quizás encuentres algo que te guste. Explora el catálogo para empezar.
+      continue_shopping: Explorar productos
+      quantity_for: Cantidad de %{product}
+      shipping_address_heading: Datos de entrega
       add_item: Añadir al carrito
       item_added: Artículo añadido al carrito.
       updated: Carrito actualizado.

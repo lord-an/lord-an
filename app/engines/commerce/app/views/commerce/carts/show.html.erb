@@ -1,56 +1,106 @@
-<h1><%= t "commerce.cart.title" %></h1>
+<section class="cart-page" aria-labelledby="cart-title">
+  <header class="page-heading cart-heading">
+    <p class="eyebrow"><%= t "commerce.cart.eyebrow" %></p>
+    <h1 id="cart-title"><%= t "commerce.cart.title" %></h1>
+    <p><%= t "commerce.cart.description" %></p>
+  </header>
 
-<% if @items.empty? %>
-  <p><%= t "commerce.cart.empty" %></p>
-<% else %>
-  <ul>
-    <% @items.each do |item| %>
-      <li>
-        <%= item.product.localized_name %>
-        <%= number_to_currency(item.product.price_cents / 100.0, unit: "#{item.product.currency_code} ") %>
-        <% unless @cart.checkout_in_progress? %>
-          <%= form_with model: item, url: cart_item_path(item), scope: :cart_item, method: :patch do |form| %>
-            <%= form.number_field :quantity, min: 1, max: item.product.inventory_count, required: true %>
-            <%= form.submit t("commerce.cart.update") %>
+  <% if @items.empty? %>
+    <section class="cart-empty content-card" aria-labelledby="cart-empty-title">
+      <span class="cart-empty__mark" aria-hidden="true">＋</span>
+      <h2 id="cart-empty-title"><%= t "commerce.cart.empty" %></h2>
+      <p><%= t "commerce.cart.empty_description" %></p>
+      <%= link_to t("commerce.cart.continue_shopping"), "/store", class: "button-link" %>
+    </section>
+  <% else %>
+    <div class="cart-layout">
+      <section class="cart-items-panel" aria-labelledby="cart-items-title">
+        <h2 id="cart-items-title" class="cart-section-title"><%= t "commerce.cart.items_heading" %></h2>
+        <ul class="cart-items">
+          <% @items.each do |item| %>
+            <li class="cart-item">
+              <div class="cart-item__media">
+                <% if item.product.featured_image.attached? %>
+                  <%= image_tag item.product.featured_image, alt: item.product.localized_name, loading: "lazy" %>
+                <% else %>
+                  <span class="product-image-placeholder" aria-hidden="true"><span>LA</span></span>
+                <% end %>
+              </div>
+              <div class="cart-item__details">
+                <h3><%= link_to item.product.localized_name, "/store/products/#{item.product.id}" %></h3>
+                <p class="cart-item__price"><%= number_to_currency(item.product.price_cents / 100.0, unit: "#{item.product.currency_code} ") %></p>
+                <% unless @cart.checkout_in_progress? %>
+                  <div class="cart-item__controls">
+                    <%= form_with model: item, url: cart_item_path(item), scope: :cart_item, method: :patch, class: "cart-quantity-form" do |form| %>
+                      <%= form.label :quantity, t("commerce.cart.quantity_for", product: item.product.localized_name), class: "sr-only" %>
+                      <%= form.number_field :quantity, min: 1, max: item.product.inventory_count, required: true, inputmode: "numeric" %>
+                      <%= form.submit t("commerce.cart.update"), class: "button-link button-link--quiet" %>
+                    <% end %>
+                    <%= button_to t("commerce.cart.remove"), cart_item_path(item), method: :delete, class: "text-action" %>
+                  </div>
+                <% end %>
+              </div>
+              <p class="cart-item__total"><%= number_to_currency(item.quantity * item.product.price_cents / 100.0, unit: "#{item.product.currency_code} ") %></p>
+            </li>
           <% end %>
-          <%= button_to t("commerce.cart.remove"), cart_item_path(item), method: :delete %>
+        </ul>
+        <% if Current.user %>
+          <%= link_to t("commerce.orders.title"), orders_path, class: "cart-orders-link" %>
         <% end %>
-      </li>
-    <% end %>
-  </ul>
+      </section>
 
-  <% if @currencies.one? %>
-    <% currency = @currencies.first %>
-    <p><%= t("commerce.cart.subtotal") %>: <%= number_to_currency(@cart.total_cents / 100.0, unit: "#{currency} ") %></p>
-  <% else %>
-    <p><%= t "commerce.cart.mixed_currencies" %></p>
-  <% end %>
-  <% if @cart.checkout_in_progress? %>
-    <p><%= t "commerce.cart.checkout_in_progress" %></p>
-    <% if @cart.checkout_order.adyen_checkout_url.present? %>
-      <p><%= link_to t("commerce.cart.resume_checkout"), @cart.checkout_order.adyen_checkout_url, target: "_blank", rel: "noopener" %></p>
-    <% end %>
-  <% else %>
-    <p><%= t "commerce.cart.shipping_rate" %></p>
-    <%= form_with url: checkout_cart_path, scope: :shipping_address do |form| %>
-      <%= form.label :name, t("commerce.cart.shipping_name") %>
-      <%= form.text_field :name, required: true, maxlength: 150 %>
-      <%= form.label :line1, t("commerce.cart.shipping_line1") %>
-      <%= form.text_field :line1, required: true, maxlength: 150 %>
-      <%= form.label :line2, t("commerce.cart.shipping_line2") %>
-      <%= form.text_field :line2, maxlength: 150 %>
-      <%= form.label :city, t("commerce.cart.shipping_city") %>
-      <%= form.text_field :city, required: true, maxlength: 100 %>
-      <%= form.label :region, t("commerce.cart.shipping_region") %>
-      <%= form.text_field :region, maxlength: 100 %>
-      <%= form.label :postal_code, t("commerce.cart.shipping_postal_code") %>
-      <%= form.text_field :postal_code, maxlength: 32 %>
-      <%= form.label :country_code, t("commerce.cart.shipping_country_code") %>
-      <%= form.text_field :country_code, required: true, minlength: 2, maxlength: 2, pattern: "[A-Z]{2}" %>
-      <%= form.submit t("commerce.cart.create_order") %>
-    <% end %>
-  <% end %>
-<% end %>
+      <aside class="cart-summary content-card" aria-labelledby="cart-summary-title">
+        <h2 id="cart-summary-title"><%= t "commerce.cart.summary" %></h2>
+        <% if @currencies.one? %>
+          <% currency = @currencies.first %>
+          <p class="cart-summary__subtotal"><span><%= t "commerce.cart.subtotal" %></span><strong><%= number_to_currency(@cart.total_cents / 100.0, unit: "#{currency} ") %></strong></p>
+        <% else %>
+          <p class="cart-summary__notice"><%= t "commerce.cart.mixed_currencies" %></p>
+        <% end %>
 
-<p><%= link_to t("store.navigation.home"), "/store" %></p>
-<p><%= link_to t("commerce.orders.title"), orders_path %></p>
+        <% if @cart.checkout_in_progress? %>
+          <p class="cart-summary__notice" role="status"><%= t "commerce.cart.checkout_in_progress" %></p>
+          <% if @cart.checkout_order.adyen_checkout_url.present? %>
+            <%= link_to t("commerce.cart.resume_checkout"), @cart.checkout_order.adyen_checkout_url, target: "_blank", rel: "noopener", class: "button-link cart-checkout-link" %>
+          <% end %>
+        <% else %>
+          <p class="cart-summary__shipping"><%= t "commerce.cart.shipping_rate" %></p>
+          <h3 class="cart-address-title"><%= t "commerce.cart.shipping_address_heading" %></h3>
+          <%= form_with url: checkout_cart_path, scope: :shipping_address, class: "cart-address-form" do |form| %>
+            <div class="cart-address-form__field">
+              <%= form.label :name, t("commerce.cart.shipping_name") %>
+              <%= form.text_field :name, required: true, maxlength: 150, autocomplete: "name" %>
+            </div>
+            <div class="cart-address-form__field">
+              <%= form.label :line1, t("commerce.cart.shipping_line1") %>
+              <%= form.text_field :line1, required: true, maxlength: 150, autocomplete: "address-line1" %>
+            </div>
+            <div class="cart-address-form__field">
+              <%= form.label :line2, t("commerce.cart.shipping_line2") %>
+              <%= form.text_field :line2, maxlength: 150, autocomplete: "address-line2" %>
+            </div>
+            <div class="cart-address-form__field">
+              <%= form.label :city, t("commerce.cart.shipping_city") %>
+              <%= form.text_field :city, required: true, maxlength: 100, autocomplete: "address-level2" %>
+            </div>
+            <div class="cart-address-form__field">
+              <%= form.label :region, t("commerce.cart.shipping_region") %>
+              <%= form.text_field :region, maxlength: 100, autocomplete: "address-level1" %>
+            </div>
+            <div class="cart-address-form__field">
+              <%= form.label :postal_code, t("commerce.cart.shipping_postal_code") %>
+              <%= form.text_field :postal_code, maxlength: 32, autocomplete: "postal-code" %>
+            </div>
+            <div class="cart-address-form__field">
+              <%= form.label :country_code, t("commerce.cart.shipping_country_code") %>
+              <%= form.text_field :country_code, required: true, minlength: 2, maxlength: 2, pattern: "[A-Z]{2}", autocomplete: "country" %>
+            </div>
+            <%= form.submit t("commerce.cart.create_order"), class: "button-link cart-checkout-link" %>
+          <% end %>
+        <% end %>
+      </aside>
+    </div>
+  <% end %>
+
+  <p class="cart-back-link"><%= link_to t("store.navigation.home"), "/store" %></p>
+</section>

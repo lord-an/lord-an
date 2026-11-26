@@ -96,9 +96,10 @@ en:
   site:
     navigation:
       home: Lord An home
+      home_link: Home
       primary: Main navigation
       section: Section navigation
-      store: Store
+      store: Products
       cart: Cart
       settings: Settings
   store:
@@ -110,6 +111,23 @@ en:
       wishlists: Wishlists
     products:
       title: Products
+      eyebrow: A considered collection
+      introduction: Find the details, compare your options, and choose what feels right.
+      search: Search products by name
+      search_placeholder: Try a product name
+      sort: Sort by
+      sort_newest: Newest
+      sort_price_asc: "Price: low to high"
+      sort_price_desc: "Price: high to low"
+      apply_filters: Update results
+      view_product: View product
+      view_product_named: View %{name}
+      empty_title: A little room for what’s next
+      empty_description: There are no products in the catalog just yet. Check back soon.
+      no_results_title: No products found
+      no_results_description: We couldn’t find anything matching “%{query}”. Try another search or clear this one.
+      clear_search: Clear search
+      return_home: Back to home
       new: New product
       edit: Edit
       delete: Delete
@@ -187,6 +205,14 @@ en:
   commerce:
     cart:
       title: Shopping cart
+      eyebrow: Your picks
+      description: Review your items and delivery details before continuing to secure payment.
+      items_heading: Your items
+      summary: Order summary
+      empty_description: A good find may be just around the corner. Browse the catalog to get started.
+      continue_shopping: Explore products
+      quantity_for: Quantity for %{product}
+      shipping_address_heading: Delivery details
       add_item: Add to cart
       item_added: Item added to your cart.
       updated: Cart updated.

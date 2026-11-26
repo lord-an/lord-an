@@ -56,6 +56,17 @@ class CommerceTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "empty cart offers a clear next step to browse products" do
+    sign_in_as users(:one)
+
+    get "/commerce/cart"
+
+    assert_response :success
+    assert_select ".cart-empty h2", "Your cart is empty."
+    assert_select ".cart-empty a[href='/store']", "Explore products"
+    assert_select ".cart-summary", false
+  end
+
   test "customers can add products to a persistent cart and update quantities" do
     sign_in_as users(:one)
     product = Store::Product.find_by!(name: "T-Shirt")

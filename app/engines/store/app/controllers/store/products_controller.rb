@@ -5,7 +5,25 @@ module Store
     before_action :require_admin, only: %i[ new create edit update destroy ]
 
     def index
-      @products = Product.all
+      @query = params[:q].to_s.strip
+      @sort = %w[ price_asc price_desc ].include?(params[:sort]) ? params[:sort] : "newest"
+      @products = Product.with_attached_featured_image.includes(:translations)
+
+      if @query.present?
+        search_pattern = "%#{Product.sanitize_sql_like(@query)}%"
+        @products = @products.left_joins(:translations).where(
+          "store_products.name LIKE :query OR store_product_translations.name LIKE :query", query: search_pattern
+        ).distinct
+      end
+
+      @products = case @sort
+      when "price_asc"
+        @products.order(price_cents: :asc, id: :asc)
+      when "price_desc"
+        @products.order(price_cents: :desc, id: :desc)
+      else
+        @products.order(created_at: :desc, id: :desc)
+      end
     end
 
     def show
